@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,cAAc,CAAA;EAEV,MAAM,EAAE,eAAe;CAE1B;;AACD,AAAA,WAAW,CAAA;EACP,MAAM,EAAE,OAAO;CAClB",
+    "sources": [
+        "stylingMenu.scss"
+    ],
+    "names": [],
+    "file": "stylingMenu.css"
+}
