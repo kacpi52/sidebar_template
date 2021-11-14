@@ -6,3 +6,36 @@
 .MenuButton{
     cursor: pointer;
 }
+
+.SidebarHidden{
+    z-index:11;
+    width: 30%;
+    height: 50%;
+    background: #0d0d0d;
+    display: grid;
+    align-items: center;
+    top: 0;
+    left: 0;
+    transition: 0.4s ease-in-out;
+    opacity: 0;
+    top: -100%;
+    position: fixed;
+}
+
+.Sidebar{
+    z-index:11;
+    width: 30%;
+    height: 50%;
+    background: #000000;
+    display: grid;
+    align-items: center;
+    top: 0%;
+    left: 0;
+    transition: 0.4s ease-in-out;
+    opacity: 1;
+    text-decoration: none;
+    position: fixed;
+    list-style: none;
+    border: solid 1px white;
+    cursor: pointer;
+}

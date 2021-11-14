@@ -1,11 +1,11 @@
 import './App.css';
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
+import HomePage from './pages/HomePage';
 import UserPage from './pages/UserPage';
 import React from 'react'
-import Menu from './Components/SidebarMenu/indexMenu';
 
 
 
@@ -13,18 +13,13 @@ import Menu from './Components/SidebarMenu/indexMenu';
 
 
 function App() {
-  
   return (
-    <>
     <Router>
-      <Routes>
-        <Route path='/' component={Menu} exact />
-        
-        <Route path='/UserPage' component={UserPage} exact /> 
-      </Routes>
+      <Switch>
+        <Route exact path="/" component={HomePage}/>
+        <Route exact path="/UserPage" component={UserPage} />
+      </Switch>
     </Router>
-      <Menu />
-    </>
   );
 }
 

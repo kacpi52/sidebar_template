@@ -5,4 +5,45 @@
 .MenuButton {
   cursor: pointer;
 }
+
+.SidebarHidden {
+  z-index: 11;
+  width: 30%;
+  height: 50%;
+  background: #0d0d0d;
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  top: 0;
+  left: 0;
+  -webkit-transition: 0.4s ease-in-out;
+  transition: 0.4s ease-in-out;
+  opacity: 0;
+  top: -100%;
+  position: fixed;
+}
+
+.Sidebar {
+  z-index: 11;
+  width: 30%;
+  height: 50%;
+  background: #000000;
+  display: -ms-grid;
+  display: grid;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  top: 0%;
+  left: 0;
+  -webkit-transition: 0.4s ease-in-out;
+  transition: 0.4s ease-in-out;
+  opacity: 1;
+  text-decoration: none;
+  position: fixed;
+  list-style: none;
+  border: solid 1px white;
+  cursor: pointer;
+}
 /*# sourceMappingURL=stylingMenu.css.map */
