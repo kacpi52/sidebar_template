@@ -1,14 +1,14 @@
-.MenuContainer{
+.menuContainer{
 
     border: solid 1px white;
    
     
 }
-.MenuButton{
+.menuButton{
     cursor: pointer;
 }
 
-.SidebarHidden{
+.sidebarHidden{
     z-index:11;
     width: 30%;
     height: 50%;
@@ -23,11 +23,11 @@
     position: fixed;
 }
 
-.Sidebar{
+.sidebar{
     z-index:11;
     width: 30%;
     height: 50%;
-    background: #000000;
+    background: black;
     display: grid;
     align-items: center;
     top: 4%;
@@ -40,12 +40,12 @@
     border: solid 1px white;
     cursor: pointer;
 }
-.HomePageLink{
+.homePageLink{
     text-decoration: none;
     color: white;
 }
 
-.LoginPanelContainer{
+.loginPanelContainer{
     position: fixed;
     top: 0;
     left: 0;
@@ -57,7 +57,7 @@
     
 }
 
-.LoginPanelContainerHidden{
+.loginPanelContainerHidden{
     position: fixed;
     top: -100%;
     left: -100%;
@@ -80,7 +80,7 @@ z-index: 10;
 opacity: 1;
 }
 
-.SubmitButton{
+.submitButton{
     padding: 5px 10px;
     justify-content: center;
     color: black;
@@ -90,7 +90,7 @@ opacity: 1;
     width: 100px;
 }
 
-.RegisterButton{
+.registerButton{
     padding: 5px 10px;
     justify-content: center;
     color: black;

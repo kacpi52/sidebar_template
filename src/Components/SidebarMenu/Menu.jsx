@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
 import { Container , Row , Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import './stylingMenu.css';
+import './stylingMenu.scss';
 
 const LoginPanel = ({showLoginPanel,toggleLoginPanel}) => {
     return (
-        <div className={toggleLoginPanel? 'LoginPanelContainer' : 'LoginPanelContainerHidden'}>
+        <div className={toggleLoginPanel? 'loginPanelContainer' : 'loginPanelContainerHidden'}>
             <div className="Panel">
                 <p>Login</p>
                 <p>Password</p>
-                <p className='SubmitButton' onClick={showLoginPanel}>Submit</p>
-                <Link to='/UserPage'  className='RegisterButton' onClick={showLoginPanel}>REGISTER</Link>
+                <p className='submitButton' onClick={showLoginPanel}>Submit</p>
+                <Link to='/UserPage'  className='registerButton' onClick={showLoginPanel}>REGISTER</Link>
             </div>
         </div>
         
@@ -18,12 +18,13 @@ const LoginPanel = ({showLoginPanel,toggleLoginPanel}) => {
 };
 
 const Menu = () => {
-    const [toggleMenu, settoggleMenu] = useState(false);
+    const [toggleMenu, settoggleMenu] = useState(false),
+    [toggleLoginPanel, settoggleLoginPanel] = useState(false);
     const showMenu = () => {
         settoggleMenu(!toggleMenu);
         console.log(toggleMenu);
     }
-    const [toggleLoginPanel, settoggleLoginPanel] = useState(false);
+    
     const showLoginPanel = () =>{
         settoggleLoginPanel(!toggleLoginPanel);
         console.log(toggleLoginPanel);
@@ -33,15 +34,15 @@ const Menu = () => {
         showLoginPanel();
     };
     return (
-        <div className='MenuContainer'>
+        <div className='menuContainer'>
             <Container>
                 <Row>
-                    <Col xs={1} className='MenuButton' onClick={showMenu}> {toggleMenu? 'CLOSE' : 'MENU'} </Col>
+                    <Col xs={1} className='menuButton' onClick={showMenu}> {toggleMenu? 'CLOSE' : 'MENU'} </Col>
                 </Row>
             </Container>
-            <div className={toggleMenu? 'Sidebar' : 'SidebarHidden'}>
+            <div className={toggleMenu? 'sidebar' : 'sidebarHidden'}>
                 <ul>
-                    <li><Link to='/' onClick={showMenu} className='HomePageLink'>Home Page</Link></li>
+                    <li><Link to='/' onClick={showMenu} className='homePageLink'>Home Page</Link></li>
                     <li>Our projects</li>
                     <li>About Us </li>
                     <li onClick={toggleBoth}>User Panel </li>
