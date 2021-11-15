@@ -1,10 +1,13 @@
 import React from 'react'
+import Menu from '../Components/SidebarMenu/Menu';
 
 const UserPage = () => {
     return (
-        <div>
+        <>
+            <Menu/>
             <h1>REGISTER PANEL </h1>
-        </div>
+            <p>Register form and user page. </p>
+        </>
     )
 }
 
