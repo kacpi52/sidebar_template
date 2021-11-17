@@ -1,0 +1,30 @@
+.menuElem{
+    cursor: pointer;
+    &__sidebar{
+        z-index:11;
+        width: 30%;
+        height: 50%;
+        background: black;
+        display: grid;
+        align-items: center;
+        top: 4%;
+        transition: 0.4s ease-in-out;
+        opacity: 1;
+        text-decoration: none;
+        position: fixed;
+        list-style: none;
+        border: solid 1px white;
+        &--hidden{
+            z-index:11;
+            width: 30%;
+            height: 50%;
+            background: #0d0d0d;
+            display: grid;
+            align-items: center;
+            transition: 0.4s ease-in-out;
+            opacity: 0;
+            top: -100%;
+            position: fixed;
+                }
+    }
+}

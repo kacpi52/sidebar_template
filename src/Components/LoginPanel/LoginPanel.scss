@@ -1,0 +1,49 @@
+.loginPanel{
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(216, 175, 209);
+    opacity: 0.5;
+    z-index: 1;
+    &--hidden{
+        position: fixed;
+        top: -100%;
+        left: -100%;
+        height: 100%;
+        width: 100%;
+        background-color: rgb(132, 138, 130);
+        opacity: 0.7;
+        z-index: 5;
+        justify-content: center;
+        }
+ &__Elements{
+        position: absolute;
+        top:30%;
+        left: 30%;
+        height: 30%;
+        width: 20%;
+        background-color: rgb(235, 5, 139);
+        z-index: 2;
+        opacity: 1;
+        &__button{
+            padding: 5px 10px;
+            justify-content: center;
+            color: black;
+            background-color: chartreuse;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 100px;
+        }
+        &__register{
+            padding: 5px 10px;
+            justify-content: center;
+            color: black;
+            background-color: orange;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+    }
+}
