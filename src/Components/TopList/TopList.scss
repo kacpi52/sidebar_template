@@ -1,0 +1,18 @@
+.List{
+    display: grid;
+    &__button{
+        position: sticky;
+        top: 20%;
+        left: 50%;
+        height: 2rem;
+        width: 10%;
+        cursor: pointer;
+        border: none;
+        border-radius: 30px;
+        background-color: rgb(86, 161, 10);
+        
+        &:hover{
+            background-color: orange;
+        }
+    }
+}
