@@ -8,7 +8,6 @@ const SingleElem = ({movieTitle}) => {
     useEffect(async()=>{
         const ApiRespData = await searchByTitle(movieTitle);
         setMovieData(ApiRespData);
-        console.log(movieData)
     },[movieTitle]);
 
     return (

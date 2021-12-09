@@ -1,37 +1,22 @@
-import React , {useState, useEffect} from 'react';
+import React , {useState} from 'react';
 import './TopList.scss';
 import {Container, Row} from 'react-bootstrap';
 import SingleElem from './SingleElem';
 import { titleArray } from './TitleArray';
 
+
+
 const TopList = () => {
     
-    const  [listSize, setListSize] = useState(0),
-    [buttonVisibility, setButtonVisibility] = useState(true);
+    const  [listSize, setListSize] = useState(0);
     let displayArray = [];
-    
     for (let i = 0; i < listSize; i++) {
         displayArray.push(<SingleElem movieTitle={titleArray[i]}/>);
+        console.log(listSize);
     }
-    const scrollListener = () => {
-         const distFromTop = document.body.scrollTop ||
-            document.documentElement.scrollTop;;
-        if (distFromTop > 3500) {                                       // wartosc dana na sztywno
-            setButtonVisibility(false);
-        } else {
-            setButtonVisibility(true)
-        }
-    }
-    useEffect(() => {
-            window.addEventListener("scroll", scrollListener);
-        return () => {
-            window.removeEventListener("scroll", scrollListener);
-        }
-    }, [])
-
     return (
         <div className='List'>
-            <button className={buttonVisibility ? 'List__button' : 'List__button--hidden'}
+            <button className={listSize<30 ? 'List__button' : 'List__button--hidden'}
                 onClick={() => {
                      setListSize(listSize + 10)
                 }}>

@@ -18,7 +18,7 @@ const DropDown = ({title, showLoginPanel}) => {
                         <div className={toggleMenu ? 'menuElem__sidebar' : 'menuElem__sidebar--hidden'} >
                             <ul>
                                 <li><Link to='/' onClick={DropMenu} className='homePageLink'>Home Page</Link></li>
-                                <li>Our projects</li>
+                                <li><Link to='/Shop' onClick={DropMenu} className='homePageLink'>Shop</Link></li>
                                 <li>About Us </li>
                                 <li onClick={ToggleBoth}>User Panel </li>
 

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import LoginPanel from '../LoginPanel/LoginPanel';
 import DropDown from './DropDown';
 import './Menu.scss';
@@ -17,10 +18,11 @@ const Menu = () => {
             <Container fluid>
                 <Row>
                     <Col xs={3} >
-                        <DropDown title='MENU' showLoginPanel={showLoginPanel}/>
+                        <DropDown title='MENU' showLoginPanel={showLoginPanel} />
+                       
                     </Col>
                     <Col xs={3} >
-                            <DropDown title='PROJECTS' showLoginPanel={showLoginPanel}/>
+                            <DropDown title='SHOP' showLoginPanel={showLoginPanel}/>
                     </Col>
                     <Col xs={3} >
                             <DropDown title='CAREER' showLoginPanel={showLoginPanel}/>
