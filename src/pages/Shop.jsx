@@ -1,16 +1,10 @@
 import React from 'react'
-import Menu from '../Components/SidebarMenu/Menu'
-
-const fs = require('fs');  // file system - dostep do plikow na dysku 
-const parser = require('xml2json');
-const tireData = require('../xml/opony.xml');
-
+import Menu from '../Components/SidebarMenu/Menu';
+import XMLToReact from 'xml-to-react';
+import '../Data/Opony.xml';
 
 const Shop = () => {
-    fs.readFile(tireData, (err,data)=>{
-        let json = parser.toJson(data);
-        console.log(json);
-    })
+    
     return (
         <>
         <Menu/>
