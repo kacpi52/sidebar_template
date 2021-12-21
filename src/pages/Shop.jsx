@@ -18,10 +18,12 @@ const Shop = () => {
             url: elem.getAttribute("url"),
             price: elem.getAttribute("price"),
             weight: elem.getAttribute("weight"),
-            img: elem.getAttribute("main")
+            imgurl: elem.getElementsByTagName("imgs"),
+            attr: elem.getAttribute("attrs").getElementsByName("Producent")
           };
         });
         setXmlElems(xmlElemsArr);
+        console.log(xmlElemsArr[0].imgurl)
       })
       .catch((err) => {
         console.log(err);
@@ -35,7 +37,11 @@ const Shop = () => {
       {xmlElems.map((elem, i) => (
         <h4 key={i}>{elem.url}</h4>
       ))}
-      <p>{xmlElems[2].price}</p>
+      {xmlElems.map((elem, i) => (
+        <h4 key={i}>{elem.attr}</h4>
+      ))}
+    
+      
     </>
   );
 };
