@@ -3,7 +3,7 @@ import { Col, Image } from 'react-bootstrap';
 import { searchByTitle } from '../../Lib/apiService';
 
 const SingleElem = ({movieTitle}) => {
-    const [movieData, setMovieData] = useState('green mile');
+    const [movieData, setMovieData] = useState('batman');
 
     useEffect(async()=>{
         const ApiRespData = await searchByTitle(movieTitle);
