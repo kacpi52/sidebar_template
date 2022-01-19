@@ -1,4 +1,4 @@
-const API_LINK = 'http://www.omdbapi.com';
+const API_LINK = 'https://www.omdbapi.com';
 const API_KEY = '2eb14caf';
 
 export const searchByTitle = async (movieTitle) =>{
