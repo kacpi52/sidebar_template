@@ -29,7 +29,7 @@ const Shop = () => {
     }
 
     const pushItems = (item, index) => {
-        productArray[index] = packElem(index)
+        productArray[index] = packElem(index);
     };
 
     useEffect(() => {
