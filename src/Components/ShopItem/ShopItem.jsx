@@ -16,3 +16,5 @@ const ShopItem = ({title, prod, imgurl, price}) => {
 }
 
 export default ShopItem;
+
+

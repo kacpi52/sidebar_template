@@ -1,58 +1,82 @@
 import React, { useState, useEffect } from "react";
 import Menu from "../Components/SidebarMenu/Menu";
 import ShopItem from "../Components/ShopItem/ShopItem";
-import {Row, Col, Container} from 'react-bootstrap';
+import {Row, Col, Container, Button} from 'react-bootstrap';
+
+const pathXml = "/Data/Opony.xml";
+const mainTagSelector = "o";
+const priceTagSelector = "price";
+const descTagSelector = "desc";
+const imgTagSelector = "imgs main";
+const imgAttSelector = "url";
+const prodTagSelector = "attrs a[name='Producent']";
 
 const Shop = () => {
-  const itemsArray=[];
+  const productArray = []
   const [xmlElems, setXmlElems] = useState([]);
+  const [testBut, setTestBut] = useState(0);
+
   
+  const packElem = (index) => {
+    return (
+      <ShopItem
+        title={xmlElems[index].desc}
+        prod={xmlElems[index].producent}
+        imgurl={xmlElems[index].imgurl}
+        price={xmlElems[index].price}
+      />
+    )
+  } 
+
+  const pushItems = (item, index) => {
+    productArray[index] = packElem(index)
+  };
+
   useEffect(() => {
-    fetch("/Data/Opony.xml")
+    fetch(pathXml)
       .then((res) => res.text())
       .then((xmlString) => {
         const xmlDomObj = new window.DOMParser().parseFromString(
           xmlString,
           "text/xml"
         );
-        const xmlOElems = xmlDomObj.getElementsByTagName("o");
+        const xmlOElems = xmlDomObj.getElementsByTagName(mainTagSelector);
         const xmlElemsArr = Array.from(xmlOElems).map((elem, i) => {
           return {
-            price: elem.getAttribute("price"),
-            desc: elem.querySelector("desc").textContent,
-            imgurl: elem.querySelector("imgs main").getAttribute('url'),
-            producent: elem.querySelector("attrs a[name='Producent']").textContent
+            price: elem.getAttribute(priceTagSelector),
+            desc: elem.querySelector(descTagSelector).textContent,
+            imgurl: elem.querySelector(imgTagSelector).getAttribute(imgAttSelector),
+            producent: elem.querySelector(prodTagSelector).textContent
           };
         });
         setXmlElems(xmlElemsArr);
-        console.log(xmlElemsArr[0].imgurl);
-        console.log(xmlElemsArr[1].imgurl);
-        console.dir(xmlElemsArr[0].attr)
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  for (let i = 0; i < 7; i++) {
-    itemsArray.push(<ShopItem
-      title={xmlElems.length > 0 && xmlElems[i].desc}
-      prod={xmlElems.length > 0 && xmlElems[i].producent}
-      imgurl={xmlElems.length > 0 && xmlElems[i].imgurl}
-      price={xmlElems.length > 0 && xmlElems[i].price}
-    />);
-  }
+  useEffect(()=>{
+    if (xmlElems.length>6) {
+      xmlElems.forEach(pushItems);
+      console.log(productArray[2]);
+    } 
+  },[testBut])
+  
 
   return (
     <>
       <Menu />
       <Container>
         <Row>
-        <Col xs={12}>LESS TRACTION MORE ACTION</Col>
+        <Col xs={12}>ALL SEASON TIRES </Col>
         </Row>
         <Row>
-          {itemsArray}
+          {productArray}
+          {productArray.length}
+          {testBut}
         </Row>
+        <Button onClick={()=>{setTestBut(testBut+1)}} />
       </Container>
       
     </>
@@ -60,3 +84,4 @@ const Shop = () => {
 };
 
 export default Shop;
+
