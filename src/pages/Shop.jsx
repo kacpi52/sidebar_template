@@ -12,26 +12,8 @@ const imgAttSelector = "url";
 const prodTagSelector = "attrs a[name='Producent']";
 
 const Shop = () => {
-  const productArray = []
   const [xmlElems, setXmlElems] = useState([]);
-  const [testBut, setTestBut] = useState(0);
-
   
-  const packElem = (index) => {
-    return (
-      <ShopItem
-        title={xmlElems[index].desc}
-        prod={xmlElems[index].producent}
-        imgurl={xmlElems[index].imgurl}
-        price={xmlElems[index].price}
-      />
-    )
-  } 
-
-  const pushItems = (item, index) => {
-    productArray[index] = packElem(index)
-  };
-
   useEffect(() => {
     fetch(pathXml)
       .then((res) => res.text())
@@ -55,15 +37,20 @@ const Shop = () => {
         console.log(err);
       });
   }, []);
-
-  useEffect(()=>{
-    if (xmlElems.length>6) {
-      xmlElems.forEach(pushItems);
-      console.log(productArray[2]);
-    } 
-  },[testBut])
-  
-
+ /*   Tutaj mam problem identyczny jak w tej wersji gdzie uzywam forEach() czyli nie renderuje mi się to w komponencie 
+      natomiast w konsoli to jest. Map bezposrednio dziala, probowalem cos kombinowac z async await ale wyszlo 
+      na to samo.
+  const showAllProducts = () => {
+    xmlElems.map((elem, index) => (
+      <ShopItem
+        title={xmlElems.length > 0 && elem.desc} 
+        prod={xmlElems.length > 0 && elem.producent}
+        imgurl={xmlElems.length > 0 && elem.imgurl}
+        price={xmlElems.length > 0 && elem.price}
+      />
+    ))
+  };
+  */
   return (
     <>
       <Menu />
@@ -72,11 +59,15 @@ const Shop = () => {
         <Col xs={12}>ALL SEASON TIRES </Col>
         </Row>
         <Row>
-          {productArray}
-          {productArray.length}
-          {testBut}
+          {xmlElems.map((elem, index) => (
+            <ShopItem
+              title={xmlElems.length > 0 && elem.desc}
+              prod={xmlElems.length > 0 && elem.producent}
+              imgurl={xmlElems.length > 0 && elem.imgurl}
+              price={xmlElems.length > 0 && elem.price}
+            />
+          ))}
         </Row>
-        <Button onClick={()=>{setTestBut(testBut+1)}} />
       </Container>
       
     </>
