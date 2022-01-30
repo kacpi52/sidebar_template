@@ -56,7 +56,7 @@ const Shop = () => {
       <Menu />
       <Container>
         <Row>
-        <Col xs={12}>ALL SEASONS TIRES  </Col>
+        <Col xs={12}>ALL SEASON TIRES  </Col>
         </Row>
         <Row>
           {xmlElems.map((elem, index) => (
