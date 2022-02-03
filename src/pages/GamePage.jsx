@@ -3,24 +3,25 @@ import Menu from '../Components/SidebarMenu/Menu';
 import { Container, Row, Col } from 'react-bootstrap';
 
 const numbersQuantity = 20;
-const numbersRange = 50; 
-const inputNumber = 1;
+const numbersRange = 20; 
 
 const GamePage = () => {
     const [userNumber, setUserNumber] = useState(false), 
           [userNumberHandler, setUserNumberHandler] = useState(false),
-          [errorHandler, setErrorHandler]= useState(false);
-
+          [errorHandler, setErrorHandler]= useState(false),
+          [resultHandler, setResultHandler]= useState(false);
     const ranArr = Array.from({length:numbersQuantity},() => Math.floor(Math.random() * numbersRange));
+   
     const inputHandler = (text) => {
       setUserNumberHandler(text.target.value)
     };
     const saveUserNumber = (event) => {
       if (isNaN(userNumberHandler)) {
+        setErrorHandler('Podaj cyfre')
+      } else {
         event.preventDefault();
       setUserNumber(userNumberHandler)
-      } else {
-        setErrorHandler('Podaj cyfre')
+      setErrorHandler(false)
       }
     };
     const keyHolder = (event) =>{
@@ -28,9 +29,18 @@ const GamePage = () => {
         setUserNumber(userNumberHandler);
       }
     };
+    const checkNumber = (item) => {
+      if (item == userNumber){
+        return setResultHandler(true);
+      } else {
+        return console.log('pudlo');
+      }
+    };
 
     useEffect(() => {
-    }, [inputNumber]);
+      ranArr.forEach(checkNumber);
+    }, [userNumber]);
+    
     
   return (
       <>
@@ -51,6 +61,7 @@ const GamePage = () => {
               <Col>
                 <p>Twoja liczba to {userNumber}</p>
                 {errorHandler}
+                <p>Wynik gry: {resultHandler?  'Trafiles':'Graj dalej'}</p>
               </Col>
               <Col>
                 <p>Dlugosc tablicy to {ranArr.length}</p>
