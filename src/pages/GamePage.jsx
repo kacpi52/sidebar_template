@@ -29,16 +29,16 @@ const GamePage = () => {
         setUserNumber(userNumberHandler);
       }
     };
-    const checkNumber = (item) => {
-      if (item == userNumber){
-        return setResultHandler(true);
-      } else {
-        return console.log('pudlo');
-      }
+    const checkNumber = () => {
+      if (ranArr.includes(userNumber)) {
+        console.log('traf');
+     } else {
+        console.log('nie traf')
+     }
     };
 
     useEffect(() => {
-      ranArr.forEach(checkNumber);
+      checkNumber();
     }, [userNumber]);
     
     
@@ -54,7 +54,7 @@ const GamePage = () => {
             <Row>
               <Col>
                 <input type='text' onChange={inputHandler} onKeyPress={keyHolder} />
-                <button type='submit' onClick={saveUserNumber}>SEND</button>
+                <button type='submit' onClick={saveUserNumber}>SET YOUR NUMBER</button>
               </Col>
             </Row>
             <Row>
@@ -65,7 +65,9 @@ const GamePage = () => {
               </Col>
               <Col>
                 <p>Dlugosc tablicy to {ranArr.length}</p>
-                <p>{ranArr}</p>
+                <p>{ranArr.map((elem)=>{
+                  return  `, ${elem} ,` 
+                })}</p>
               </Col>
             </Row>
             
@@ -75,3 +77,5 @@ const GamePage = () => {
 };
 
 export default GamePage;
+
+
