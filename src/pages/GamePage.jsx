@@ -4,13 +4,13 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 const numbersQuantity = 20;
 const numbersRange = 20; 
+const ranArr = Array.from({length:numbersQuantity},() => Math.floor(Math.random() * numbersRange));
 
 const GamePage = () => {
     const [userNumber, setUserNumber] = useState(false), 
           [userNumberHandler, setUserNumberHandler] = useState(false),
           [errorHandler, setErrorHandler]= useState(false),
           [resultHandler, setResultHandler]= useState(false);
-    const ranArr = Array.from({length:numbersQuantity},() => Math.floor(Math.random() * numbersRange));
    
     const inputHandler = (text) => {
       setUserNumberHandler(text.target.value)
@@ -29,19 +29,22 @@ const GamePage = () => {
         setUserNumber(userNumberHandler);
       }
     };
-    const checkNumber = () => {
-      if (ranArr.includes(userNumber)) {
-        console.log('traf');
-     } else {
-        console.log('nie traf')
-     }
+
+
+    const checkNumber = (arr, number) => {
+      arr.forEach((element)=>{
+        if (element === number) {
+          setResultHandler(true);
+          console.log(resultHandler);
+        }
+      });
     };
 
     useEffect(() => {
-      checkNumber();
+       checkNumber(ranArr, userNumber)
     }, [userNumber]);
     
-    
+    console.log(resultHandler);
   return (
       <>
           <Menu /> 
@@ -54,7 +57,7 @@ const GamePage = () => {
             <Row>
               <Col>
                 <input type='text' onChange={inputHandler} onKeyPress={keyHolder} />
-                <button type='submit' onClick={saveUserNumber}>SET YOUR NUMBER</button>
+                <button type='submit' onClick={saveUserNumber}>PLAY</button>
               </Col>
             </Row>
             <Row>
@@ -66,7 +69,7 @@ const GamePage = () => {
               <Col>
                 <p>Dlugosc tablicy to {ranArr.length}</p>
                 <p>{ranArr.map((elem)=>{
-                  return  `, ${elem} ,` 
+                  return  ` ${elem} ,` 
                 })}</p>
               </Col>
             </Row>
