@@ -22,7 +22,7 @@ const GamePage = () => {
       event.preventDefault();
       setUserNumber(userNumberHandler);
       setErrorHandler(false);
-      checkNumber(ranArr, userNumberHandler);
+      iterArray(ranArr);
       }
     };
     const keyHolder = (event) =>{
@@ -30,16 +30,21 @@ const GamePage = () => {
         setUserNumber(userNumberHandler);
       }
     };
-
-
-    const checkNumber = (arr, number) => {
-      setResultHandler(false);
-      arr.forEach((element)=>{
-        if (element === number) {
-          setResultHandler(true);
+    const iterArray = (array) => {
+      let i = 0;
+      setResultHandler(false)
+      do {
+        if (array[i]===userNumber){
+          setResultHandler(true)
+          console.log(`traf na iteracji ${i} wynik ${resultHandler}`);
+          i+=1;
+        } else {
+          i+=1;
+          console.log(`pudlo na iteracji ${i}`)
         }
-      });
+      } while (i < array.length);
     };
+
 
   return (
       <>
@@ -74,3 +79,39 @@ const GamePage = () => {
 };
 
 export default GamePage;
+
+
+
+
+/*
+const checkNumber = (arr, number) => {
+      setResultHandler(false);
+      arr.forEach((element,index)=>{
+        console.log(`ilosc iteracji : ${index}`);
+        if (element === number) {
+          setResultHandler(true);
+        }
+      });
+    };
+
+checkNumber(ranArr, userNumberHandler);
+    */
+
+/*
+   const checkUntil = (array, number) => {
+     do {
+       setResultHandler(false);
+       let i = 0;
+       if(array[i] === number){
+         setResultHandler(true);
+         console.log(`traf na iteracji ${i}`);
+       } else {
+         i++;
+         console.log(`pudlo na iteracji ${i}, wynik ${resultHandler}`);
+         console.log(array[i]);
+       }
+      
+     } while (resultHandler === true);
+   };
+
+*/
