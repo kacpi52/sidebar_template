@@ -32,10 +32,12 @@ const GamePage = () => {
     };
     const iterArray = (array) => {
       let i = 0;
+      let sum = 0;
       do {
-        console.log(array[i]);
         i+=1;
-      } while (i < array.length);
+        sum = array[i-1] + array[i];
+        console.log(`index dodany wynosi : ${sum} na iteracji ${i}`);
+      } while (i < array.length - 1);
     };
 
 
@@ -77,5 +79,16 @@ export default GamePage;
 
 
 /*
-
+const iterArray = (array) => {
+      let i = 0;
+      let sum = 0;
+      do {
+        i+=1;
+        if (i===19){
+          sum = array[i];
+        } else {
+          sum = array[i-1] + array[i];
+        }
+        console.log(`index dodany wynosi : ${sum} na iteracji ${i}`);
+      } while (i < array.length);
 */
