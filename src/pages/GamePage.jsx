@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Menu from '../Components/SidebarMenu/Menu';
 import { Container, Row, Col } from 'react-bootstrap';
 
@@ -22,7 +22,6 @@ const GamePage = () => {
       event.preventDefault();
       setUserNumber(userNumberHandler);
       setErrorHandler(false);
-      iterArray(ranArr);
       }
     };
     const keyHolder = (event) =>{
@@ -32,13 +31,21 @@ const GamePage = () => {
     };
     const iterArray = (array) => {
       let i = 0;
-      let sum = 0;
-      do {
+      setResultHandler(false)
+      while (array[i-1] !== userNumber && i<numbersRange){
         i+=1;
-        sum = array[i-1] + array[i];
-        console.log(`index dodany wynosi : ${sum} na iteracji ${i}`);
-      } while (i < array.length - 1);
+        if(array[i-1]=== userNumber){
+          setResultHandler(true)
+          console.log(`trafiony na iteracji: ${i} `);
+        } else {
+          console.log(`pudlo na iteracji : ${i} `);
+        }
+      };
     };
+    useEffect(() => {  
+      iterArray(ranArr);  
+    }, [userNumber])
+    
 
 
   return (
@@ -79,6 +86,9 @@ export default GamePage;
 
 
 /*
+const numbersRange = 20; 
+const ranArr = Array.from({length:numbersQuantity},() => Math.floor(Math.random() * numbersRange));
+
 const iterArray = (array) => {
       let i = 0;
       let sum = 0;
@@ -91,4 +101,12 @@ const iterArray = (array) => {
         }
         console.log(`index dodany wynosi : ${sum} na iteracji ${i}`);
       } while (i < array.length);
+
+       let i = 0;
+      let sum = 0;
+      do {
+        i+=1;
+        sum = array[i-1] + array[i];
+        console.log(`index dodany wynosi : ${sum} na iteracji ${i}`);
+      } while (i < array.length - 1);
 */
