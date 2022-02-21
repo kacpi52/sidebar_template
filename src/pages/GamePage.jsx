@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import Menu from '../Components/SidebarMenu/Menu';
 import { Container, Row, Col } from 'react-bootstrap';
 
@@ -8,46 +8,36 @@ const ranArr = Array.from({length:numbersQuantity},() => Math.floor(Math.random(
 
 const GamePage = () => {
     const [userNumber, setUserNumber] = useState(false), 
-          [userNumberHandler, setUserNumberHandler] = useState(false),
           [errorHandler, setErrorHandler]= useState(false),
           [resultHandler, setResultHandler]= useState(false);
    
     const inputHandler = (text) => {
-      setUserNumberHandler(parseInt(text.target.value))
+      setUserNumber(parseInt(text.target.value))
     };
     const saveUserNumber = (event) => {
-      if (isNaN(userNumberHandler)) {
+      if (isNaN(userNumber)) {
         setErrorHandler('Podaj cyfre')
       } else {
       event.preventDefault();
-      setUserNumber(userNumberHandler);
       setErrorHandler(false);
+      iterArray(ranArr); 
       }
     };
-    const keyHolder = (event) =>{
-      if (event.key === 'enter' && typeof userNumberHandler === 'number') {
-        setUserNumber(userNumberHandler);
-      }
-    };
+    
     const iterArray = (array) => {
       let i = 0;
-      setResultHandler(false)
       while (array[i-1] !== userNumber && i<numbersRange){
         i+=1;
-        if(array[i-1]=== userNumber){
-          setResultHandler(true)
-          console.log(`trafiony na iteracji: ${i} `);
-        } else {
-          console.log(`pudlo na iteracji : ${i} `);
-        }
+        console.log(i);
       };
+      if (array[i-1] === userNumber){
+        setResultHandler(true);
+        console.log('trafiles');
+      } else {
+        setResultHandler(false);
+      }
     };
-    useEffect(() => {  
-      iterArray(ranArr);  
-    }, [userNumber])
     
-
-
   return (
       <>
           <Menu /> 
@@ -59,7 +49,7 @@ const GamePage = () => {
             </Row>
             <Row>
               <Col>
-                <input type='text' onChange={inputHandler} onKeyPress={keyHolder} />
+                <input type='text' onChange={inputHandler}  />
                 <button type='submit' onClick={saveUserNumber}>PLAY</button>
               </Col>
             </Row>
@@ -86,27 +76,9 @@ export default GamePage;
 
 
 /*
-const numbersRange = 20; 
-const ranArr = Array.from({length:numbersQuantity},() => Math.floor(Math.random() * numbersRange));
-
-const iterArray = (array) => {
-      let i = 0;
-      let sum = 0;
-      do {
-        i+=1;
-        if (i===19){
-          sum = array[i];
-        } else {
-          sum = array[i-1] + array[i];
-        }
-        console.log(`index dodany wynosi : ${sum} na iteracji ${i}`);
-      } while (i < array.length);
-
-       let i = 0;
-      let sum = 0;
-      do {
-        i+=1;
-        sum = array[i-1] + array[i];
-        console.log(`index dodany wynosi : ${sum} na iteracji ${i}`);
-      } while (i < array.length - 1);
+const keyHolder = (event) =>{
+      if (event.key === 'enter' ) {
+        // tego w sumie juz nie potrzebuje to
+      }
+    };
 */
