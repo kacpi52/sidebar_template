@@ -5,23 +5,29 @@ import { Container, Row, Col } from 'react-bootstrap';
 const numbersQuantity = 20;
 const numbersRange = 20; 
 const ranArr = Array.from({length:numbersQuantity},() => Math.floor(Math.random() * numbersRange));
+const triesLimit = 3;
 
 const GamePage = () => {
     const [userNumber, setUserNumber] = useState(false), 
           [errorHandler, setErrorHandler]= useState(false),
-          [resultHandler, setResultHandler]= useState(false);
+          [resultHandler, setResultHandler]= useState(false),
+          [triesCounter, setTriesCounter]= useState(0);
    
     const inputHandler = (text) => {
       setUserNumber(parseInt(text.target.value))
     };
     const saveUserNumber = (event) => {
+      setTriesCounter(triesCounter+1);
       if (isNaN(userNumber)) {
         setErrorHandler('Podaj cyfre')
       } else {
       event.preventDefault();
       setErrorHandler(false);
-      iterArray(ranArr); 
+      if (triesCounter<triesLimit) {
+        iterArray(ranArr);
       }
+      }
+      
     };
     
     const iterArray = (array) => {
@@ -32,7 +38,7 @@ const GamePage = () => {
       };
       if (array[i-1] === userNumber){
         setResultHandler(true);
-        console.log('trafiles');
+        console.log(`traf na iteracji ${i}`);
       } else {
         setResultHandler(false);
       }
@@ -58,6 +64,7 @@ const GamePage = () => {
                 <p>Twoja liczba to {userNumber}</p>
                 {errorHandler}
                 <p>Wynik gry: {resultHandler?  'Trafiles':'Graj dalej'}</p>
+                <p>{triesCounter<triesLimit ? `Zostaly ci jeszcze ${triesLimit-triesCounter} próby` : `Wykorzystałeś limit prób`}</p>
               </Col>
               <Col>
                 <p>Dlugosc tablicy to {ranArr.length}</p>
