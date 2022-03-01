@@ -26,7 +26,7 @@ const GamePage = () => {
       event.preventDefault();
       setErrorHandler(false);
       if (triesCounter < triesLimit && resultHandler !== true) {
-        iterArray(ranArr, userNumber);
+        setResultHandler(iterArray(ranArr, userNumber));
       }
     }
   };
@@ -38,17 +38,15 @@ const GamePage = () => {
       console.log(i);
     }
     if (array[i - 1] === selectedNumber) {
-      setResultHandler(true);
-      console.log(`traf na iteracji ${i}`);
+      return true;
     } else {
-      setResultHandler(false);
+      return false;
     }
   };
   const resetAll = () => {
     setResultHandler(false);
     setTriesCounter(0);
   };
-
   return (
     <>
       <Menu />
