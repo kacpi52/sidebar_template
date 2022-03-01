@@ -26,18 +26,18 @@ const GamePage = () => {
       event.preventDefault();
       setErrorHandler(false);
       if (triesCounter < triesLimit && resultHandler !== true) {
-        iterArray(ranArr);
+        iterArray(ranArr, userNumber);
       }
     }
   };
 
-  const iterArray = (array) => {
+  const iterArray = (array, selectedNumber) => {
     let i = 0;
-    while (array[i - 1] !== userNumber && i < numbersRange) {
+    while (array[i - 1] !== selectedNumber && i < numbersRange) {
       i += 1;
       console.log(i);
     }
-    if (array[i - 1] === userNumber) {
+    if (array[i - 1] === selectedNumber) {
       setResultHandler(true);
       console.log(`traf na iteracji ${i}`);
     } else {
@@ -79,7 +79,7 @@ const GamePage = () => {
             </p>
           </Col>
           <Col>
-            <button type="submiy" onClick={resetAll}>
+            <button type="submit" onClick={resetAll}>
               RESTART
             </button>
             <p>Dlugosc tablicy to {ranArr.length}</p>
@@ -92,11 +92,3 @@ const GamePage = () => {
 };
 
 export default GamePage;
-
-/*
-const keyHolder = (event) =>{
-      if (event.key === 'enter' ) {
-        // tego w sumie juz nie potrzebuje to
-      }
-    };
-*/
