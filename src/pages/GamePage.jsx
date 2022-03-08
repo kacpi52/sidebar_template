@@ -27,13 +27,14 @@ const GamePage = () => {
       setErrorHandler(false);
       if (triesCounter < triesLimit && resultHandler !== true) {
         setResultHandler(iterArray(ranArr, userNumber));
+        ranArr.push(userNumber);
       }
     }
   };
 
   const iterArray = (array, selectedNumber) => {
     let i = 0;
-    while (array[i - 1] !== selectedNumber && i < numbersRange) {
+    while (array[i - 1] !== selectedNumber && i < array.length) {
       i += 1;
       console.log(i);
     }
