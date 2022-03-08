@@ -8,6 +8,7 @@ const ranArr = Array.from({ length: numbersQuantity }, () =>
   Math.floor(Math.random() * numbersRange)
 );
 const triesLimit = 3;
+const selectedArray = [];
 
 const GamePage = () => {
   const [userNumber, setUserNumber] = useState(false),
@@ -15,6 +16,7 @@ const GamePage = () => {
     [resultHandler, setResultHandler] = useState(false),
     [triesCounter, setTriesCounter] = useState(0);
 
+  console.log(selectedArray);
   const inputHandler = (text) => {
     setUserNumber(parseInt(text.target.value));
   };
@@ -25,9 +27,14 @@ const GamePage = () => {
     } else {
       event.preventDefault();
       setErrorHandler(false);
-      if (triesCounter < triesLimit && resultHandler !== true) {
+      if (
+        triesCounter < triesLimit &&
+        resultHandler !== true &&
+        !selectedArray.includes(userNumber) // no i tutaj uzywajac tego warunku dalbym do jsx komunikat ze game over
+      ) {
         setResultHandler(iterArray(ranArr, userNumber));
         ranArr.push(userNumber);
+        selectedArray.push(userNumber);
       }
     }
   };
