@@ -7,16 +7,15 @@ const numbersRange = 20;
 const ranArr = Array.from({ length: numbersQuantity }, () =>
   Math.floor(Math.random() * numbersRange)
 );
-const triesLimit = 3;
+const triesLimit = 5;
 const selectedArray = [];
-
+let checkVal;
 const GamePage = () => {
   const [userNumber, setUserNumber] = useState(false),
     [errorHandler, setErrorHandler] = useState(false),
     [resultHandler, setResultHandler] = useState(false),
     [triesCounter, setTriesCounter] = useState(0);
 
-  console.log(selectedArray);
   const inputHandler = (text) => {
     setUserNumber(parseInt(text.target.value));
   };
@@ -27,14 +26,16 @@ const GamePage = () => {
     } else {
       event.preventDefault();
       setErrorHandler(false);
+      selectedArray.forEach(checkSelected);
       if (
         triesCounter < triesLimit &&
         resultHandler !== true &&
-        !selectedArray.includes(userNumber) // no i tutaj uzywajac tego warunku dalbym do jsx komunikat ze game over
+        checkVal !== true
       ) {
         setResultHandler(iterArray(ranArr, userNumber));
         ranArr.push(userNumber);
         selectedArray.push(userNumber);
+        console.log(selectedArray);
       }
     }
   };
@@ -49,6 +50,11 @@ const GamePage = () => {
       return true;
     } else {
       return false;
+    }
+  };
+  const checkSelected = (elem) => {
+    if (elem === userNumber) {
+      checkVal = true;
     }
   };
   const resetAll = () => {
@@ -83,6 +89,7 @@ const GamePage = () => {
                 ? `Zostaly ci jeszcze ${triesLimit - triesCounter} próby`
                 : `Wykorzystałeś limit prób`}
             </p>
+            <p>{checkVal && "Game Over - wybrales ta sama cyfre"}</p>
           </Col>
           <Col>
             <button type="submit" onClick={resetAll}>
