@@ -9,13 +9,13 @@ const ranArr = Array.from({ length: numbersQuantity }, () =>
 );
 const triesLimit = 5;
 const selectedArray = [];
-let checkVal;
+
 const GamePage = () => {
   const [userNumber, setUserNumber] = useState(false),
     [errorHandler, setErrorHandler] = useState(false),
     [resultHandler, setResultHandler] = useState(false),
     [triesCounter, setTriesCounter] = useState(0);
-
+  let checkedValue;
   const inputHandler = (text) => {
     setUserNumber(parseInt(text.target.value));
   };
@@ -26,11 +26,11 @@ const GamePage = () => {
     } else {
       event.preventDefault();
       setErrorHandler(false);
-      selectedArray.forEach(checkSelected);
+      checkedValue = checkingPreviousNumber(selectedArray, userNumber);
       if (
         triesCounter < triesLimit &&
         resultHandler !== true &&
-        checkVal !== true
+        checkedValue !== true
       ) {
         setResultHandler(iterArray(ranArr, userNumber));
         ranArr.push(userNumber);
@@ -52,11 +52,19 @@ const GamePage = () => {
       return false;
     }
   };
-  const checkSelected = (elem) => {
-    if (elem === userNumber) {
-      checkVal = true;
+  const checkingPreviousNumber = (selArray, number) => {
+    let tempVal;
+    const checkSelected = (elem) => {
+      if (elem === number) {
+        tempVal = true;
+      }
+    };
+    selArray.forEach(checkSelected);
+    if (tempVal === true) {
+      return true;
     }
   };
+
   const resetAll = () => {
     setResultHandler(false);
     setTriesCounter(0);
@@ -89,7 +97,7 @@ const GamePage = () => {
                 ? `Zostaly ci jeszcze ${triesLimit - triesCounter} próby`
                 : `Wykorzystałeś limit prób`}
             </p>
-            <p>{checkVal && "Game Over - wybrales ta sama cyfre"}</p>
+            <p>{checkedValue && "Game Over - wybrales ta sama cyfre"}</p>
           </Col>
           <Col>
             <button type="submit" onClick={resetAll}>
