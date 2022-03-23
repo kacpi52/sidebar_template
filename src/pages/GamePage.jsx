@@ -15,7 +15,7 @@ const GamePage = () => {
     [errorHandler, setErrorHandler] = useState(false),
     [resultHandler, setResultHandler] = useState(false),
     [triesCounter, setTriesCounter] = useState(0);
-  let checkedValue;
+
   const inputHandler = (text) => {
     setUserNumber(parseInt(text.target.value));
   };
@@ -26,11 +26,11 @@ const GamePage = () => {
     } else {
       event.preventDefault();
       setErrorHandler(false);
-      checkedValue = checkingPreviousNumber(selectedArray, userNumber);
+      selectedArray.forEach(checkingPreviousNumber);
       if (
         triesCounter < triesLimit &&
-        resultHandler !== true &&
-        checkedValue !== true
+        resultHandler !== true
+        //checkingPreviousNumber(selectedArray, userNumber) !== true
       ) {
         setResultHandler(iterArray(ranArr, userNumber));
         ranArr.push(userNumber);
@@ -52,16 +52,20 @@ const GamePage = () => {
       return false;
     }
   };
-  const checkingPreviousNumber = (selArray, number) => {
-    let tempVal;
-    const checkSelected = (elem) => {
-      if (elem === number) {
-        tempVal = true;
-      }
-    };
-    selArray.forEach(checkSelected);
-    if (tempVal === true) {
+
+  const checkingPreviousNumber = (elem) => {
+    var posRes = false;
+    if (elem === userNumber) {
+      posRes = true;
+    } else {
+      console.log(`false`);
+    }
+    if (posRes === true) {
+      console.log(`rzuca true foreach`);
       return true;
+    } else {
+      console.log(`rzuca falsee foreach`);
+      return false;
     }
   };
 
@@ -97,7 +101,6 @@ const GamePage = () => {
                 ? `Zostaly ci jeszcze ${triesLimit - triesCounter} próby`
                 : `Wykorzystałeś limit prób`}
             </p>
-            <p>{checkedValue && "Game Over - wybrales ta sama cyfre"}</p>
           </Col>
           <Col>
             <button type="submit" onClick={resetAll}>
