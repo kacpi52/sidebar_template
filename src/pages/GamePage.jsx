@@ -20,24 +20,25 @@ const GamePage = () => {
     setUserNumber(parseInt(text.target.value));
   };
   const saveUserNumber = (event) => {
-    var checkVal = false;
+    let checkVal = false; // to dziala i dla leta i dla vara
     setTriesCounter(triesCounter + 1);
     if (isNaN(userNumber)) {
       setErrorHandler("Podaj cyfre");
     } else {
       event.preventDefault();
       setErrorHandler(false);
-      checkVal = selectedArray.forEach((elem) => {
-        let posRes = false;
+      selectedArray.forEach((elem) => {
         if (elem === userNumber) {
-          posRes = true;
-          console.log(`posres zasetowany na ${posRes}`);
+          checkVal = true;
         }
-        console.log(`posres po ifie to ${posRes}`);
-        return posRes;
+        return checkVal; // bez tego returna to tez dziala - bo poki co tej funkcji nie przypisuje nigdzie
       });
-      console.log(`zmienna checkval ma wartosc ${checkVal}`);
-      if (triesCounter < triesLimit && resultHandler !== true) {
+      console.log(`zmienna checkval po funk ma wartosc ${checkVal}`);
+      if (
+        triesCounter < triesLimit &&
+        resultHandler !== true &&
+        checkVal !== true
+      ) {
         setResultHandler(iterArray(ranArr, userNumber));
         ranArr.push(userNumber);
         selectedArray.push(userNumber);
