@@ -15,7 +15,7 @@ const GamePage = () => {
     [errorHandler, setErrorHandler] = useState(false),
     [resultHandler, setResultHandler] = useState(false),
     [triesCounter, setTriesCounter] = useState(0);
-
+  let checkVal = false;
   const inputHandler = (text) => {
     setUserNumber(parseInt(text.target.value));
   };
@@ -26,11 +26,16 @@ const GamePage = () => {
     } else {
       event.preventDefault();
       setErrorHandler(false);
-      if (
-        triesCounter < triesLimit &&
-        resultHandler !== true &&
-        selectedArray.forEach(checkingPreviousNumber) !== true
-      ) {
+      checkVal = selectedArray.forEach((elem) => {
+        let posRes = false;
+        if (elem === userNumber) {
+          posRes = true;
+          console.log(`posres zasetowany na ${posRes}`);
+        }
+        console.log(`posres po ifie to ${posRes}`);
+        return posRes;
+      });
+      if (triesCounter < triesLimit && resultHandler !== true) {
         setResultHandler(iterArray(ranArr, userNumber));
         ranArr.push(userNumber);
         selectedArray.push(userNumber);
@@ -49,14 +54,6 @@ const GamePage = () => {
       return true;
     } else {
       return false;
-    }
-  };
-
-  const checkingPreviousNumber = (elem) => {
-    var posRes = false;
-    if (elem === userNumber) {
-      posRes = true;
-      return posRes;
     }
   };
 
