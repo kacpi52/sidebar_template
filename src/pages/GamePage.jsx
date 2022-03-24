@@ -20,41 +20,28 @@ const GamePage = () => {
     setUserNumber(parseInt(text.target.value));
   };
   const saveUserNumber = (event) => {
-    let a = 0;
-    var b = 0;
     var checkVal = false;
     setTriesCounter(triesCounter + 1);
     if (isNaN(userNumber)) {
       setErrorHandler("Podaj cyfre");
     } else {
-      if (1 < 2) {
-        a = a + 1;
-        b = b + 1;
-        console.log(`wartosc w ifie  a let to ${a} b var to ${b} `);
-      }
-      console.log(`wartosc poza ifem  a let to ${a} b var to ${b} `);
-      for (let index = 0; index < 3; index++) {
-        a = a + 1;
-        b = b + 1;
-        console.log(`wartosc w forze  a let to ${a} b var to ${b} `);
-      }
-      console.log(`wartosc poza forem  a let to ${a} b var to ${b} `);
       event.preventDefault();
       setErrorHandler(false);
       checkVal = selectedArray.forEach((elem) => {
         let posRes = false;
         if (elem === userNumber) {
           posRes = true;
-          //console.log(`posres zasetowany na ${posRes}`);
+          console.log(`posres zasetowany na ${posRes}`);
         }
-        //console.log(`posres po ifie to ${posRes}`);
+        console.log(`posres po ifie to ${posRes}`);
         return posRes;
       });
+      console.log(`zmienna checkval ma wartosc ${checkVal}`);
       if (triesCounter < triesLimit && resultHandler !== true) {
         setResultHandler(iterArray(ranArr, userNumber));
         ranArr.push(userNumber);
         selectedArray.push(userNumber);
-        //console.log(selectedArray);
+        console.log(selectedArray);
       }
     }
   };
@@ -63,7 +50,7 @@ const GamePage = () => {
     let i = 0;
     while (array[i - 1] !== selectedNumber && i < array.length) {
       i += 1;
-      //console.log(i);
+      console.log(i);
     }
     if (array[i - 1] === selectedNumber) {
       return true;
