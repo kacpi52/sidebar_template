@@ -27,14 +27,18 @@ const GamePage = () => {
     if (isNaN(userNumber)) {
       setErrorHandler("Podaj cyfre");
     } else {
-      for (let index = 0; index < 3; index++) {
-        if (1 < 2) {
-          a = a + 1;
-          b = b + 1;
-          console.log(`wartosc w ifie  a let to ${a} b var to ${b} `);
-        }
-        console.log(`wartosc poza ifem  a let to ${a} b var to ${b} `);
+      if (1 < 2) {
+        a = a + 1;
+        b = b + 1;
+        console.log(`wartosc w ifie  a let to ${a} b var to ${b} `);
       }
+      console.log(`wartosc poza ifem  a let to ${a} b var to ${b} `);
+      for (let index = 0; index < 3; index++) {
+        a = a + 1;
+        b = b + 1;
+        console.log(`wartosc w forze  a let to ${a} b var to ${b} `);
+      }
+      console.log(`wartosc poza forem  a let to ${a} b var to ${b} `);
       event.preventDefault();
       setErrorHandler(false);
       checkVal = selectedArray.forEach((elem) => {
