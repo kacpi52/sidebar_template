@@ -20,7 +20,7 @@ const GamePage = () => {
     setUserNumber(parseInt(text.target.value));
   };
   const saveUserNumber = (event) => {
-    let checkVal = false; // to dziala i dla leta i dla vara
+    let checkVal;
     setTriesCounter(triesCounter + 1);
     if (isNaN(userNumber)) {
       setErrorHandler("Podaj cyfre");
@@ -30,8 +30,9 @@ const GamePage = () => {
       selectedArray.forEach((elem) => {
         if (elem === userNumber) {
           checkVal = true;
+        } else {
+          checkVal = false;
         }
-        return checkVal; // bez tego returna to tez dziala - bo poki co tej funkcji nie przypisuje nigdzie
       });
       console.log(`zmienna checkval po funk ma wartosc ${checkVal}`);
       if (
