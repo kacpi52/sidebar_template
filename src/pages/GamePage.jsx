@@ -9,6 +9,7 @@ const ranArr = Array.from({ length: numbersQuantity }, () =>
 );
 const triesLimit = 5;
 const selectedArray = [];
+let filteredArray = [];
 
 const GamePage = () => {
   const [userNumber, setUserNumber] = useState(false),
@@ -28,6 +29,7 @@ const GamePage = () => {
     } else {
       event.preventDefault();
       setErrorHandler(false);
+      filteredArray = evenFilter(ranArr);
       selectedArray.forEach((elem) => {
         if (elem === userNumber) {
           checkVal = true;
@@ -41,14 +43,24 @@ const GamePage = () => {
         resultHandler !== true &&
         checkVal !== true
       ) {
-        setResultHandler(iterArray(ranArr, userNumber));
-        ranArr.push(userNumber);
+        setResultHandler(iterArray(filteredArray, userNumber));
+        filteredArray.push(userNumber);
         selectedArray.push(userNumber);
         console.log(selectedArray);
       }
     }
   };
-
+  const evenFilter = (array) => {
+    if (array[0] % 2 === 0) {
+      return array.filter((value) => {
+        return value % 2 === 0;
+      });
+    } else {
+      return array.filter((value) => {
+        return value % 2 !== 0;
+      });
+    }
+  };
   const iterArray = (array, selectedNumber) => {
     let i = 0;
     while (array[i - 1] !== selectedNumber && i < array.length) {
@@ -102,6 +114,8 @@ const GamePage = () => {
             </button>
             <p>Dlugosc tablicy to {ranArr.length}</p>
             <p>{ranArr.join(" , ")}</p>
+            <p>Przesortowana tablica to </p>
+            <p>{filteredArray.join(" , ")}</p>
           </Col>
         </Row>
       </Container>
