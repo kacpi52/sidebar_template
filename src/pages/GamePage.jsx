@@ -14,13 +14,14 @@ const GamePage = () => {
   const [userNumber, setUserNumber] = useState(false),
     [errorHandler, setErrorHandler] = useState(false),
     [resultHandler, setResultHandler] = useState(false),
+    [repeatError, setRepeatError] = useState(false),
     [triesCounter, setTriesCounter] = useState(0);
 
   const inputHandler = (text) => {
     setUserNumber(parseInt(text.target.value));
   };
   const saveUserNumber = (event) => {
-    let checkVal;
+    let checkVal = false;
     setTriesCounter(triesCounter + 1);
     if (isNaN(userNumber)) {
       setErrorHandler("Podaj cyfre");
@@ -34,7 +35,7 @@ const GamePage = () => {
           checkVal = false;
         }
       });
-      console.log(`zmienna checkval po funk ma wartosc ${checkVal}`);
+      setRepeatError(checkVal);
       if (
         triesCounter < triesLimit &&
         resultHandler !== true &&
@@ -93,6 +94,7 @@ const GamePage = () => {
                 ? `Zostaly ci jeszcze ${triesLimit - triesCounter} próby`
                 : `Wykorzystałeś limit prób`}
             </p>
+            <p>{repeatError && "Wybrales ta sama liczbę dwa razy z rzędu "}</p>
           </Col>
           <Col>
             <button type="submit" onClick={resetAll}>
