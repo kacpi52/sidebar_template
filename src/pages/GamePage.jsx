@@ -8,8 +8,6 @@ const ranArr = Array.from({ length: numbersQuantity }, () =>
   Math.floor(Math.random() * numbersRange)
 );
 const triesLimit = 5;
-const selectedArray = [];
-let filteredArray = [];
 
 const GamePage = () => {
   const [userNumber, setUserNumber] = useState(false),
@@ -22,6 +20,7 @@ const GamePage = () => {
     setUserNumber(parseInt(text.target.value));
   };
   const saveUserNumber = (event) => {
+    let resVal = false;
     let checkVal = false;
     setTriesCounter(triesCounter + 1);
     if (isNaN(userNumber)) {
@@ -29,12 +28,16 @@ const GamePage = () => {
     } else {
       event.preventDefault();
       setErrorHandler(false);
-      filteredArray = evenFilter(ranArr);
-      selectedArray.forEach((elem) => {
-        if (elem === userNumber) {
+      ranArr.push(...evenFilter(ranArr));
+      ranArr.forEach((elem, index) => {
+        if (
+          elem === userNumber &&
+          index > numbersQuantity &&
+          index < ranArr.length
+        ) {
+          resVal = true;
+        } else if (elem === userNumber && index > ranArr.length) {
           checkVal = true;
-        } else {
-          checkVal = false;
         }
       });
       setRepeatError(checkVal);
@@ -43,10 +46,8 @@ const GamePage = () => {
         resultHandler !== true &&
         checkVal !== true
       ) {
-        setResultHandler(iterArray(filteredArray, userNumber));
-        filteredArray.push(userNumber);
-        selectedArray.push(userNumber);
-        console.log(selectedArray);
+        setResultHandler(resVal);
+        ranArr.push(userNumber);
       }
     }
   };
@@ -59,18 +60,6 @@ const GamePage = () => {
       return array.filter((value) => {
         return value % 2 !== 0;
       });
-    }
-  };
-  const iterArray = (array, selectedNumber) => {
-    let i = 0;
-    while (array[i - 1] !== selectedNumber && i < array.length) {
-      i += 1;
-      console.log(i);
-    }
-    if (array[i - 1] === selectedNumber) {
-      return true;
-    } else {
-      return false;
     }
   };
 
@@ -114,8 +103,6 @@ const GamePage = () => {
             </button>
             <p>Dlugosc tablicy to {ranArr.length}</p>
             <p>{ranArr.join(" , ")}</p>
-            <p>Przesortowana tablica to </p>
-            <p>{filteredArray.join(" , ")}</p>
           </Col>
         </Row>
       </Container>
