@@ -22,21 +22,34 @@ const GamePage = () => {
   const saveUserNumber = (event) => {
     let resVal = false;
     let checkVal = false;
+    let evenCheck;
+    if (ranArr[0] % 2 === 0) {
+      evenCheck = true;
+    } else {
+      evenCheck = false;
+    }
     setTriesCounter(triesCounter + 1);
     if (isNaN(userNumber)) {
       setErrorHandler("Podaj cyfre");
     } else {
       event.preventDefault();
       setErrorHandler(false);
-      ranArr.push(...evenFilter(ranArr));
       ranArr.forEach((elem, index) => {
         if (
           elem === userNumber &&
-          index > numbersQuantity &&
-          index < ranArr.length
+          index < numbersQuantity &&
+          evenCheck === true &&
+          elem % 2 === 0
         ) {
           resVal = true;
-        } else if (elem === userNumber && index > ranArr.length) {
+        } else if (
+          elem === userNumber &&
+          index < numbersQuantity &&
+          evenCheck !== true &&
+          elem % 2 !== 0
+        ) {
+          resVal = true;
+        } else if (elem === userNumber && index >= numbersQuantity) {
           checkVal = true;
         }
       });
@@ -49,17 +62,6 @@ const GamePage = () => {
         setResultHandler(resVal);
         ranArr.push(userNumber);
       }
-    }
-  };
-  const evenFilter = (array) => {
-    if (array[0] % 2 === 0) {
-      return array.filter((value) => {
-        return value % 2 === 0;
-      });
-    } else {
-      return array.filter((value) => {
-        return value % 2 !== 0;
-      });
     }
   };
 
