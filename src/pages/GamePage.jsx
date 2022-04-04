@@ -15,18 +15,15 @@ const GamePage = () => {
     [resultHandler, setResultHandler] = useState(false),
     [repeatError, setRepeatError] = useState(false),
     [triesCounter, setTriesCounter] = useState(0);
-
+  let resVal = false;
+  let checkVal = false;
+  let evenCheck = false;
   const inputHandler = (text) => {
     setUserNumber(parseInt(text.target.value));
   };
   const saveUserNumber = (event) => {
-    let resVal = false;
-    let checkVal = false;
-    let evenCheck;
     if (ranArr[0] % 2 === 0) {
       evenCheck = true;
-    } else {
-      evenCheck = false;
     }
     setTriesCounter(triesCounter + 1);
     if (isNaN(userNumber)) {
@@ -34,25 +31,9 @@ const GamePage = () => {
     } else {
       event.preventDefault();
       setErrorHandler(false);
-      ranArr.forEach((elem, index) => {
-        if (
-          elem === userNumber &&
-          index < numbersQuantity &&
-          evenCheck === true &&
-          elem % 2 === 0
-        ) {
-          resVal = true;
-        } else if (
-          elem === userNumber &&
-          index < numbersQuantity &&
-          evenCheck !== true &&
-          elem % 2 !== 0
-        ) {
-          resVal = true;
-        } else if (elem === userNumber && index >= numbersQuantity) {
-          checkVal = true;
-        }
-      });
+      ranArr.forEach((elem, index, arr) =>
+        checkArray(elem, index, arr, userNumber, numbersQuantity)
+      );
       setRepeatError(checkVal);
       if (
         triesCounter < triesLimit &&
@@ -64,7 +45,20 @@ const GamePage = () => {
       }
     }
   };
-
+  const checkArray = (elem, index, arr, number, arrLength) => {
+    if (elem === number) {
+      if (index < arrLength) {
+        if (evenCheck === true && elem % 2 === 0) {
+          // wiem ze tutaj dubluje warunki ale uznalem ze tak bedzie prosciej i czytelniej
+          resVal = true;
+        } else if (evenCheck !== true && elem % 2 !== 0) {
+          resVal = true;
+        }
+      } else if (index >= arrLength) {
+        checkVal = true;
+      }
+    }
+  };
   const resetAll = () => {
     setResultHandler(false);
     setTriesCounter(0);
