@@ -15,47 +15,47 @@ const GamePage = () => {
     [resultHandler, setResultHandler] = useState(false),
     [repeatError, setRepeatError] = useState(false),
     [triesCounter, setTriesCounter] = useState(0);
-  let resVal = false;
-  let checkVal = false;
-  let evenCheck = false;
+
   const inputHandler = (text) => {
     setUserNumber(parseInt(text.target.value));
   };
   const saveUserNumber = (event) => {
-    if (ranArr[0] % 2 === 0) {
-      evenCheck = true;
-    }
+    let resVal = false;
+    let checkVal = false;
+    let evenCheck = false;
+
+    if (ranArr[0] % 2 === 0) evenCheck = true;
     setTriesCounter(triesCounter + 1);
     if (isNaN(userNumber)) {
       setErrorHandler("Podaj cyfre");
     } else {
       event.preventDefault();
       setErrorHandler(false);
-      ranArr.forEach((elem, index, arr) =>
-        checkArray(elem, index, arr, userNumber, numbersQuantity)
+      ranArr.forEach((elem, index) =>
+        checkArray(elem, index, userNumber, resVal, checkVal, evenCheck)
       );
+      console.log(`po funkcji wynik powtorki to ${checkVal}`);
       setRepeatError(checkVal);
-      if (
-        triesCounter < triesLimit &&
-        resultHandler !== true &&
-        checkVal !== true
-      ) {
+      if (triesCounter < triesLimit && !resultHandler && !checkVal) {
         setResultHandler(resVal);
         ranArr.push(userNumber);
       }
     }
   };
-  const checkArray = (elem, index, arr, number, arrLength) => {
+  const checkArray = (elem, index, number, resVal, checkVal, evenCheck) => {
     if (elem === number) {
-      if (index < arrLength) {
-        if (evenCheck === true && elem % 2 === 0) {
-          // wiem ze tutaj dubluje warunki ale uznalem ze tak bedzie prosciej i czytelniej
-          resVal = true;
-        } else if (evenCheck !== true && elem % 2 !== 0) {
-          resVal = true;
-        }
-      } else if (index >= arrLength) {
+      if (evenCheck) {
+        if (elem % 2 === 0) resVal = true;
+      } else {
+        if (elem % 2 !== 0) resVal = true;
+      }
+      if (index >= numbersQuantity) {
         checkVal = true;
+        console.log(` powinno dac powtorke i wynik ${checkVal}`);
+      }
+    } else {
+      if (index >= numbersQuantity) {
+        checkVal = false;
       }
     }
   };
