@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Menu from "../Components/SidebarMenu/Menu";
 import { Container, Row, Col } from "react-bootstrap";
+import AlertBox from "../Components/AlertBox/AlertBox";
 
 const numbersQuantity = 20;
 const numbersRange = 20;
@@ -21,7 +22,7 @@ const GamePage = () => {
   };
   const saveUserNumber = (event) => {
     let resVal = false;
-    let checkVal = false;
+    var checkVal = false;
     let evenCheck = false;
 
     if (ranArr[0] % 2 === 0) evenCheck = true;
@@ -65,6 +66,7 @@ const GamePage = () => {
   };
   return (
     <>
+      <AlertBox />
       <Menu />
       <Container>
         <Row>
