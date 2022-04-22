@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Menu from "../Components/SidebarMenu/Menu";
-import ShopItem from "../Components/ShopItem/ShopItem";
 import { Row, Col, Container } from "react-bootstrap";
-import { Alert } from "bootstrap";
-import AlertBox from "../Components/AlertBox/AlertBox";
+import { AlertBox, Menu, ShopItem } from "../Components/index";
 
 const pathXml = "/Data/Opony.xml";
 const mainTagSelector = "o";

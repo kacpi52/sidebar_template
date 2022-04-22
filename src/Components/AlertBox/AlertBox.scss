@@ -5,16 +5,15 @@
   top: 0;
   position: sticky;
   &__text {
-    color: rgb(190, 190, 190);
     width: 95%;
     text-align: center;
-    background-color: rgb(3, 6, 20);
   }
-  &__button {
-    color: rgb(181, 247, 211);
+  &__space {
     width: 5%;
     text-align: right;
     margin-right: 10px;
-    background-color: rgb(35, 44, 44);
+    &__button {
+      text-transform: uppercase;
+    }
   }
 }

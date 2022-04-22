@@ -1,7 +1,5 @@
 import React from "react";
-import AlertBox from "../Components/AlertBox/AlertBox";
-import Menu from "../Components/SidebarMenu/Menu";
-import TopList from "../Components/TopList/TopList";
+import { AlertBox, Menu, TopList } from "../Components/index";
 
 const HomePage = () => {
   return (
