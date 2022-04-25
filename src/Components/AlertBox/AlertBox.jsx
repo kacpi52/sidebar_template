@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./AlertBox.scss";
-import { darkButtonStyling, alertBackground } from "../../Utils/index";
+import "../../Utils/Buttons.scss";
+import "../../Utils/FontsBackgrounds.scss";
 
-const AlertBox = () => {
+const AlertBox = ({ alertContent }) => {
+  const [textAlert, setTextAlert] = useState();
+  useEffect(() => {
+    if (!alertContent) {
+      setTextAlert(false);
+    } else {
+      setTextAlert(alertContent);
+    }
+  }, [alertContent]);
+
   return (
-    <div className="AlertItem">
-      <span className="AlertItem__text" style={alertBackground}>
-        Text alertu
-      </span>
+    <div className={textAlert ? "AlertItem" : "AlertItem--hidden"}>
+      <span className="AlertItem__text globalAlertBackground">{textAlert}</span>
       <span className="AlertItem__space">
-        <button className="AlertItem__space__button" style={darkButtonStyling}>
+        <button
+          className="globalDarkButton"
+          onClick={() => setTextAlert(false)}
+        >
           Close
         </button>
       </span>

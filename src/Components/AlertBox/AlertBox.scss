@@ -4,6 +4,9 @@
   justify-content: flex-end;
   top: 0;
   position: sticky;
+  &--hidden {
+    display: none;
+  }
   &__text {
     width: 95%;
     text-align: center;
@@ -12,8 +15,5 @@
     width: 5%;
     text-align: right;
     margin-right: 10px;
-    &__button {
-      text-transform: uppercase;
-    }
   }
 }

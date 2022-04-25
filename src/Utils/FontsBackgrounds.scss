@@ -1,0 +1,8 @@
+$backgroundAlert: rgb(5, 27, 37);
+$textAlert: rgb(255, 207, 207);
+$fontAlert: "Fira Sans";
+.globalAlertBackground {
+  color: $textAlert;
+  background-color: $backgroundAlert;
+  font-family: $fontAlert;
+}

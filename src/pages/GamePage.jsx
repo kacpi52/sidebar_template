@@ -15,7 +15,8 @@ const GamePage = () => {
     [errorHandler, setErrorHandler] = useState(false),
     [resultHandler, setResultHandler] = useState(false),
     [repeatError, setRepeatError] = useState(false),
-    [triesCounter, setTriesCounter] = useState(0);
+    [triesCounter, setTriesCounter] = useState(0),
+    [alertContent, setAlertContent] = useState();
 
   const inputHandler = (text) => {
     setUserNumber(parseInt(text.target.value));
@@ -36,6 +37,7 @@ const GamePage = () => {
         checkArray(elem, index, userNumber, resVal, checkVal, evenCheck)
       );
       console.log(`po funkcji wynik powtorki to ${checkVal}`);
+      setAlertContent(`po funkcji wynik powtorki to ${checkVal}`);
       setRepeatError(checkVal);
       if (triesCounter < triesLimit && !resultHandler && !checkVal) {
         setResultHandler(resVal);
@@ -53,6 +55,7 @@ const GamePage = () => {
       if (index >= numbersQuantity) {
         checkVal = true;
         console.log(` powinno dac powtorke i wynik ${checkVal}`);
+        setAlertContent(`powinno dac powtorke i wynik ${checkVal}`);
       }
     } else {
       if (index >= numbersQuantity) {
@@ -66,7 +69,7 @@ const GamePage = () => {
   };
   return (
     <>
-      <AlertBox />
+      <AlertBox alertContent={alertContent} />
       <Menu />
       <Container>
         <Row>
