@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Menu from "../Components/SidebarMenu/Menu";
 import { Container, Row, Col } from "react-bootstrap";
 import AlertBox from "../Components/AlertBox/AlertBox";
+import "../Utils/Buttons.scss";
 
 const numbersQuantity = 20;
 const numbersRange = 20;
@@ -55,7 +56,7 @@ const GamePage = () => {
       if (index >= numbersQuantity) {
         checkVal = true;
         console.log(` powinno dac powtorke i wynik ${checkVal}`);
-        setAlertContent(`powinno dac powtorke i wynik ${checkVal}`);
+        setAlertContent(` powtorka i wynik zmiennej pomocniczej ${checkVal}`);
       }
     } else {
       if (index >= numbersQuantity) {
@@ -66,6 +67,7 @@ const GamePage = () => {
   const resetAll = () => {
     setResultHandler(false);
     setTriesCounter(0);
+    setAlertContent(`alert od zresetowania`);
   };
   return (
     <>
