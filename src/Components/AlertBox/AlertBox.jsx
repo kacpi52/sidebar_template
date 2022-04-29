@@ -4,39 +4,40 @@ import "../../Utils/Buttons.scss";
 import "../../Utils/FontsBackgrounds.scss";
 
 const AlertBox = ({ alertContent }) => {
-  const [hideAlert, setHideAlert] = useState(),
+  const [hideAllAlert, setHideAllAlert] = useState(),
     [textAlert, setTextAlert] = useState([]);
   useEffect(() => {
-    if (!alertContent) {
-      setHideAlert(false);
+    if (alertContent) {
+      setHideAllAlert(true);
+      setTextAlert(
+        alertContent.map((elem, index) => (
+          <div
+            className={hideAllAlert ? "AlertItem" : "AlertItem--hidden"}
+            key={index}
+          >
+            <span key={index} className="AlertItem__text globalAlertBackground">
+              Alert nr {index}. {elem}
+            </span>
+            <span className="AlertItem__space">
+              <button
+                key={index}
+                className="globalDarkButton"
+                onClick={() => {
+                  setTextAlert(textAlert.splice(index, 1));
+                }}
+              >
+                Close
+              </button>
+            </span>
+          </div>
+        ))
+      );
     } else {
-      setHideAlert(true);
-      setTextAlert((arr) => [...arr, alertContent]);
+      setHideAllAlert(false);
     }
   }, [alertContent]);
 
-  return (
-    <div className={hideAlert ? "AlertItem" : "AlertItem--hidden"}>
-      <span className="AlertItem__text globalAlertBackground">
-        {textAlert.map((elem, index) => (
-          <div key={index}>
-            Alert nr {index}. {elem}
-          </div>
-        ))}
-      </span>
-      <span className="AlertItem__space">
-        <button
-          className="globalDarkButton"
-          onClick={() => {
-            setHideAlert(false);
-            setTextAlert([]);
-          }}
-        >
-          Close
-        </button>
-      </span>
-    </div>
-  );
+  return <>{textAlert} </>;
 };
 
 export default AlertBox;

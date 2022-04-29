@@ -17,7 +17,7 @@ const GamePage = () => {
     [resultHandler, setResultHandler] = useState(false),
     [repeatError, setRepeatError] = useState(false),
     [triesCounter, setTriesCounter] = useState(0),
-    [alertContent, setAlertContent] = useState();
+    [alertContent, setAlertContent] = useState([]);
 
   const inputHandler = (text) => {
     setUserNumber(parseInt(text.target.value));
@@ -29,8 +29,13 @@ const GamePage = () => {
 
     if (ranArr[0] % 2 === 0) evenCheck = true;
     setTriesCounter(triesCounter + 1);
+    setAlertContent((arr) => [
+      ...arr,
+      `Alert - Zostaly ci jeszcze ${triesLimit - triesCounter} próby`,
+    ]);
     if (isNaN(userNumber)) {
       setErrorHandler("Podaj cyfre");
+      setAlertContent((arr) => [...arr, `Alert - nie podales cyfry `]);
     } else {
       event.preventDefault();
       setErrorHandler(false);
@@ -38,7 +43,6 @@ const GamePage = () => {
         checkArray(elem, index, userNumber, resVal, checkVal, evenCheck)
       );
       console.log(`po funkcji wynik powtorki to ${checkVal}`);
-      setAlertContent(`po funkcji wynik powtorki to ${checkVal}`);
       setRepeatError(checkVal);
       if (triesCounter < triesLimit && !resultHandler && !checkVal) {
         setResultHandler(resVal);
@@ -56,7 +60,10 @@ const GamePage = () => {
       if (index >= numbersQuantity) {
         checkVal = true;
         console.log(` powinno dac powtorke i wynik ${checkVal}`);
-        setAlertContent(` powtorka i wynik zmiennej pomocniczej ${checkVal}`);
+        setAlertContent((arr) => [
+          ...arr,
+          ` powtorka i wynik zmiennej pomocniczej ${checkVal}`,
+        ]);
       }
     } else {
       if (index >= numbersQuantity) {
@@ -67,7 +74,7 @@ const GamePage = () => {
   const resetAll = () => {
     setResultHandler(false);
     setTriesCounter(0);
-    setAlertContent(`alert od zresetowania`);
+    setAlertContent((arr) => [...arr, `alert od zresetowania`]);
   };
   return (
     <>
