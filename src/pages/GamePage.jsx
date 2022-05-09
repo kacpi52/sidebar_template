@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Menu from "../Components/SidebarMenu/Menu";
 import { Container, Row, Col } from "react-bootstrap";
 import AlertBox from "../Components/AlertBox/AlertBox";
@@ -17,6 +17,7 @@ const GamePage = () => {
     [resultHandler, setResultHandler] = useState(false),
     [repeatError, setRepeatError] = useState(false),
     [triesCounter, setTriesCounter] = useState(0),
+    [alertArray, setAlertArray] = useState([]),
     [alertContent, setAlertContent] = useState([]);
 
   const inputHandler = (text) => {
@@ -76,9 +77,35 @@ const GamePage = () => {
     setTriesCounter(0);
     setAlertContent((arr) => [...arr, `alert od zresetowania`]);
   };
+  useEffect(() => {
+    if (alertContent) {
+      setAlertArray(
+        alertContent.map((elem, index) => {
+          return (
+            <AlertBox
+              alertText={elem}
+              alertKey={index}
+              bottom={false}
+              key={index}
+            />
+          );
+        })
+      );
+    }
+  }, [alertContent]);
+  useEffect(() => {
+    setAlertArray((arr) => [
+      ...arr,
+      <AlertBox
+        alertText={"Alert od załadowania "}
+        bottom={true}
+        alertKey={arr.length}
+      />,
+    ]);
+  }, []);
   return (
     <>
-      <AlertBox alertContent={alertContent} />
+      {alertArray}
       <Menu />
       <Container>
         <Row>

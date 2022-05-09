@@ -1,43 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./AlertBox.scss";
 import "../../Utils/Buttons.scss";
 import "../../Utils/FontsBackgrounds.scss";
 
-const AlertBox = ({ alertContent }) => {
-  const [hideAllAlert, setHideAllAlert] = useState(),
-    [textAlert, setTextAlert] = useState([]);
-  useEffect(() => {
-    if (alertContent) {
-      setHideAllAlert(true);
-      setTextAlert(
-        alertContent.map((elem, index) => (
-          <div
-            className={hideAllAlert ? "AlertItem" : "AlertItem--hidden"}
-            key={index}
-          >
-            <span key={index} className="AlertItem__text globalAlertBackground">
-              Alert nr {index}. {elem}
-            </span>
-            <span className="AlertItem__space">
-              <button
-                key={index}
-                className="globalDarkButton"
-                onClick={() => {
-                  setTextAlert(textAlert.splice(index, 1));
-                }}
-              >
-                Close
-              </button>
-            </span>
-          </div>
-        ))
-      );
-    } else {
-      setHideAllAlert(false);
-    }
-  }, [alertContent]);
+const AlertBox = ({ alertText, bottom, alertKey }) => {
+  const [alertVisibility, setAlertVisibility] = useState(true);
 
-  return <>{textAlert} </>;
+  return (
+    <div
+      className={
+        bottom
+          ? alertVisibility
+            ? "BottomAlertItem"
+            : "BottomAlertItem--hidden"
+          : alertVisibility
+          ? "AlertItem"
+          : "AlertItem--hidden"
+      }
+      key={alertKey}
+    >
+      <span key={alertKey} className="AlertItem__text globalAlertBackground">
+        Alert nr {alertKey}. {alertText}
+      </span>
+      <span className="AlertItem__space">
+        <button
+          key={alertKey}
+          className="globalDarkButton"
+          onClick={() => {
+            setAlertVisibility(false);
+          }}
+        >
+          Close
+        </button>
+      </span>
+    </div>
+  );
 };
 
 export default AlertBox;

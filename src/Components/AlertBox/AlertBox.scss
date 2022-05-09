@@ -17,3 +17,24 @@
     margin-right: 10px;
   }
 }
+
+.BottomAlertItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: absolute;
+  bottom: 5px;
+  &--hidden {
+    display: none;
+  }
+  &__text {
+    width: 95%;
+    text-align: center;
+  }
+  &__space {
+    width: 5%;
+    text-align: right;
+    margin-right: 10px;
+  }
+}
