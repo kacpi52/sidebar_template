@@ -20,6 +20,7 @@ const GamePage = () => {
     [alertArray, setAlertArray] = useState([]),
     [alertContent, setAlertContent] = useState([]);
 
+  const baseAlertArray = [];
   const inputHandler = (text) => {
     setUserNumber(parseInt(text.target.value));
   };
@@ -77,35 +78,32 @@ const GamePage = () => {
     setTriesCounter(0);
     setAlertContent((arr) => [...arr, `alert od zresetowania`]);
   };
+
   useEffect(() => {
     if (alertContent) {
-      setAlertArray(
-        alertContent.map((elem, index) => {
-          return (
-            <AlertBox
-              alertText={elem}
-              alertKey={index}
-              bottom={false}
-              key={index}
-            />
-          );
-        })
-      );
+      setAlertArray(alertContent);
     }
   }, [alertContent]);
-  useEffect(() => {
-    setAlertArray((arr) => [
-      ...arr,
-      <AlertBox
-        alertText={"Alert od załadowania "}
-        bottom={true}
-        alertKey={arr.length}
-      />,
-    ]);
-  }, []);
+
+  const alertBoxArray = alertArray.map((elem, index) => {
+    return (
+      <AlertBox alertText={elem} key={index} alertKey={index} bottom={false} />
+    );
+  });
+
+  baseAlertArray.push(
+    <AlertBox
+      alertText={"Bazowy alert po otwarciu strony"}
+      key={baseAlertArray.length}
+      alertKey={baseAlertArray.length}
+      bottom={true}
+    />
+  );
+
   return (
     <>
-      {alertArray}
+      {alertBoxArray}
+      {baseAlertArray}
       <Menu />
       <Container>
         <Row>
