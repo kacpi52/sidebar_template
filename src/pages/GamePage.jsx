@@ -20,7 +20,12 @@ const GamePage = () => {
     [alertArray, setAlertArray] = useState([]),
     [alertContent, setAlertContent] = useState([]);
 
-  const baseAlertArray = [];
+  class alertClass {
+    constructor(text, location) {
+      this.text = text;
+      this.location = location;
+    }
+  }
   const inputHandler = (text) => {
     setUserNumber(parseInt(text.target.value));
   };
@@ -33,11 +38,17 @@ const GamePage = () => {
     setTriesCounter(triesCounter + 1);
     setAlertContent((arr) => [
       ...arr,
-      `Alert - Zostaly ci jeszcze ${triesLimit - triesCounter} próby`,
+      new alertClass(
+        `Alert - Zostaly ci jeszcze ${triesLimit - triesCounter} próby`,
+        false
+      ),
     ]);
     if (isNaN(userNumber)) {
       setErrorHandler("Podaj cyfre");
-      setAlertContent((arr) => [...arr, `Alert - nie podales cyfry `]);
+      setAlertContent((arr) => [
+        ...arr,
+        new alertClass(`Alert - nie podales cyfry `, false),
+      ]);
     } else {
       event.preventDefault();
       setErrorHandler(false);
@@ -64,7 +75,7 @@ const GamePage = () => {
         console.log(` powinno dac powtorke i wynik ${checkVal}`);
         setAlertContent((arr) => [
           ...arr,
-          ` powtorka i wynik zmiennej pomocniczej ${checkVal}`,
+          new alertClass(`powinno dac powtorke i wynik ${checkVal} `, false),
         ]);
       }
     } else {
@@ -76,7 +87,11 @@ const GamePage = () => {
   const resetAll = () => {
     setResultHandler(false);
     setTriesCounter(0);
-    setAlertContent((arr) => [...arr, `alert od zresetowania`]);
+    setAlertContent((arr) => [
+      ...arr,
+      new alertClass(`Alert od zresetowania danych `, false),
+    ]);
+    console.log(alertContent);
   };
 
   useEffect(() => {
@@ -87,23 +102,25 @@ const GamePage = () => {
 
   const alertBoxArray = alertArray.map((elem, index) => {
     return (
-      <AlertBox alertText={elem} key={index} alertKey={index} bottom={false} />
+      <AlertBox
+        alertText={elem.text}
+        key={index}
+        alertKey={index}
+        bottom={elem.location}
+      />
     );
   });
 
-  baseAlertArray.push(
-    <AlertBox
-      alertText={"Bazowy alert po otwarciu strony"}
-      key={baseAlertArray.length}
-      alertKey={baseAlertArray.length}
-      bottom={true}
-    />
-  );
+  useEffect(() => {
+    setAlertContent((arr) => [
+      ...arr,
+      new alertClass(`Bazowy alert od otwarcia strony `, true),
+    ]);
+  }, []);
 
   return (
     <>
       {alertBoxArray}
-      {baseAlertArray}
       <Menu />
       <Container>
         <Row>
