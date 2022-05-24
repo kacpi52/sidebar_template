@@ -1,5 +1,6 @@
 .AlertItem {
   display: flex;
+  width: 100%;
   align-items: center;
   justify-content: flex-end;
   top: 0;
@@ -18,23 +19,11 @@
   }
 }
 
-.BottomAlertItem {
-  width: 100%;
+.bottomContainer {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  width: 100%;
+  flex-direction: column;
   position: absolute;
-  bottom: 0;
-  &--hidden {
-    display: none;
-  }
-  &__text {
-    width: 95%;
-    text-align: center;
-  }
-  &__space {
-    width: 5%;
-    text-align: right;
-    margin-right: 10px;
-  }
+  top: auto;
+  bottom: 10px;
 }

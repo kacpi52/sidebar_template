@@ -7,36 +7,40 @@ const AlertBox = ({ alertText, bottom, alertKey }) => {
   const [alertVisibility, setAlertVisibility] = useState(true),
     [alertLocation, setAlertLocation] = useState(bottom);
 
+  if (bottom) {
+    return (
+      // tu jest poki co na sztywno
+      <div className="bottomContainer">
+        <AlertBar barText={alertText} barKey={alertKey} />
+        <AlertBar barText={alertText} barKey={alertKey} />
+      </div>
+    );
+  } else {
+    return <AlertBar barText={alertText} barKey={alertKey} />;
+  }
+};
+
+export default AlertBox;
+
+const AlertBar = ({ barText, barKey }) => {
+  const [alertVisibility, setAlertVisibility] = useState(true);
+
   return (
     <div
-      className={
-        alertLocation
-          ? alertVisibility
-            ? "BottomAlertItem"
-            : "BottomAlertItem--hidden"
-          : alertVisibility
-          ? "AlertItem"
-          : "AlertItem--hidden"
-      }
-      key={alertKey}
+      className={alertVisibility ? "AlertItem" : "AlertItem--hidden"}
+      key={barKey}
     >
-      <span key={alertKey} className="AlertItem__text globalAlertBackground">
-        Alert nr {alertKey}. {alertText}
+      <span key={barKey} className="AlertItem__text globalAlertBackground">
+        Alert nr {barKey}. {barText}
       </span>
       <span className="AlertItem__space">
-        <button
-          key={alertKey}
-          className="globalDarkButton"
-          onClick={() => {
-            setAlertLocation(!alertLocation);
-          }}
-        >
+        <button key={barKey} className="globalDarkButton" onClick={() => {}}>
           MOVE
         </button>
       </span>
       <span className="AlertItem__space">
         <button
-          key={alertKey}
+          key={barKey}
           className="globalDarkButton"
           onClick={() => {
             setAlertVisibility(false);
@@ -48,5 +52,3 @@ const AlertBox = ({ alertText, bottom, alertKey }) => {
     </div>
   );
 };
-
-export default AlertBox;
