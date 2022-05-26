@@ -89,7 +89,7 @@ const GamePage = () => {
     setTriesCounter(0);
     setAlertContent((arr) => [
       ...arr,
-      new alertClass(`Alert od zresetowania danych `, false),
+      new alertClass(`Alert od zresetowania danych `, true),
     ]);
     console.log(alertContent);
   };
@@ -101,15 +101,13 @@ const GamePage = () => {
   }, [alertContent]);
 
   const alertBoxArray = alertArray.map((elem, index) => {
-    return (
-      <AlertBox
-        alertText={elem.text}
-        key={index}
-        alertKey={index}
-        bottom={elem.location}
-      />
-    );
+    return {
+      alertText: elem.text,
+      alertKey: index,
+      bottom: elem.location,
+    };
   });
+  console.log(alertBoxArray);
 
   useEffect(() => {
     setAlertContent((arr) => [
@@ -120,7 +118,7 @@ const GamePage = () => {
 
   return (
     <>
-      {alertBoxArray}
+      <AlertBox alertBoxArray={alertBoxArray} />
       <Menu />
       <Container>
         <Row>
