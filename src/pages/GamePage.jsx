@@ -17,7 +17,7 @@ const GamePage = () => {
     [resultHandler, setResultHandler] = useState(false),
     [repeatError, setRepeatError] = useState(false),
     [triesCounter, setTriesCounter] = useState(0),
-    [alertArray, setAlertArray] = useState([]),
+    [isTriggerAlert, setIsTriggerAlert] = useState(false),
     [alertContent, setAlertContent] = useState([]);
 
   class alertClass {
@@ -72,7 +72,6 @@ const GamePage = () => {
       }
       if (index >= numbersQuantity) {
         checkVal = true;
-        console.log(` powinno dac powtorke i wynik ${checkVal}`);
         setAlertContent((arr) => [
           ...arr,
           new alertClass(`powinno dac powtorke i wynik ${checkVal} `, false),
@@ -91,23 +90,25 @@ const GamePage = () => {
       ...arr,
       new alertClass(`Alert od zresetowania danych `, true),
     ]);
-    console.log(alertContent);
   };
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (alertContent) {
       setAlertArray(alertContent);
     }
-  }, [alertContent]);
+  }, [alertContent]); */
 
-  const alertBoxArray = alertArray.map((elem, index) => {
+  const alertBoxArray = alertContent.map((elem, index) => {
     return {
       alertText: elem.text,
       alertKey: index,
       bottom: elem.location,
     };
   });
-  console.log(alertBoxArray);
+
+  const pushElem = () => {
+    setIsTriggerAlert(!isTriggerAlert); // POBUDZENIE HOOKA :)))
+  };
 
   useEffect(() => {
     setAlertContent((arr) => [
@@ -118,7 +119,7 @@ const GamePage = () => {
 
   return (
     <>
-      <AlertBox alertBoxArray={alertBoxArray} />
+      <AlertBox alertBoxArray={alertBoxArray} pushElem={pushElem} />
       <Menu />
       <Container>
         <Row>

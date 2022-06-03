@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./AlertBar.scss";
 
-const AlertBar = ({ barText, barKey }) => {
+const AlertBar = ({ barText, barKey, triggerPosition, bottom, arrIndex }) => {
   const [alertVisibility, setAlertVisibility] = useState(true);
 
   return (
@@ -13,7 +13,13 @@ const AlertBar = ({ barText, barKey }) => {
         Alert nr {barKey}. {barText}
       </span>
       <span className="AlertItem__space">
-        <button key={barKey} className="globalDarkButton" onClick={() => {}}>
+        <button
+          key={barKey}
+          className="globalDarkButton"
+          onClick={() => {
+            triggerPosition(arrIndex, bottom);
+          }}
+        >
           MOVE
         </button>
       </span>
