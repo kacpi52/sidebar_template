@@ -7,6 +7,7 @@ import "../../Utils/FontsBackgrounds.scss";
 const AlertBox = ({ alertBoxArray, pushElem }) => {
   const topArr = [];
   const botArr = [];
+  let topDown = false;
 
   const triggerPosition = (ind, bot) => {
     if (bot) {
@@ -22,7 +23,7 @@ const AlertBox = ({ alertBoxArray, pushElem }) => {
 
   if (alertBoxArray) {
     alertBoxArray.forEach((elem, index) => {
-      if (elem.bottom) {
+      if (topDown) {
         botArr.push(
           <AlertBar
             barText={elem.alertText}
@@ -33,6 +34,7 @@ const AlertBox = ({ alertBoxArray, pushElem }) => {
             key={index}
           />
         );
+        topDown = !topDown;
       } else {
         topArr.push(
           <AlertBar
@@ -44,6 +46,7 @@ const AlertBox = ({ alertBoxArray, pushElem }) => {
             key={index}
           />
         );
+        topDown = !topDown;
       }
     });
   }
