@@ -24,37 +24,56 @@ const AlertBox = ({ alertBoxArray, pushElem }) => {
   if (alertBoxArray) {
     alertBoxArray.forEach((elem, index) => {
       if (topDown) {
-        botArr.push(
-          <AlertBar
-            barText={elem.alertText}
-            barKey={elem.alertKey}
-            triggerPosition={triggerPosition}
-            arrIndex={botArr.length}
-            bottom={elem.bottom}
-            key={index}
-          />
-        );
+        botArr.push({
+          elemAlertText: elem.alertText,
+          elemAlertKey: elem.alertKey,
+          elemTriggerPosition: triggerPosition,
+          elemArrIndex: botArr.length,
+          elemBottom: elem.bottom,
+          key: index,
+        });
         topDown = !topDown;
       } else {
-        topArr.push(
-          <AlertBar
-            barText={elem.alertText}
-            barKey={elem.alertKey}
-            triggerPosition={triggerPosition}
-            arrIndex={topArr.length}
-            bottom={elem.bottom}
-            key={index}
-          />
-        );
+        topArr.push({
+          elemAlertText: elem.alertText,
+          elemAlertKey: elem.alertKey,
+          elemTriggerPosition: triggerPosition,
+          elemArrIndex: botArr.length,
+          elemBottom: elem.bottom,
+          key: index,
+        });
         topDown = !topDown;
       }
     });
   }
-
+  const topArrComponents = topArr.map((elem, index) => {
+    return (
+      <AlertBar
+        barText={elem.elemAlertText}
+        barKey={elem.elemAlertKey}
+        triggerPosition={elem.elemTriggerPosition}
+        arrIndex={topArr.length}
+        bottom={elem.elemBottom}
+        key={index}
+      />
+    );
+  });
+  const botArrComponents = botArr.map((elem, index) => {
+    return (
+      <AlertBar
+        barText={elem.elemAlertText}
+        barKey={elem.elemAlertKey}
+        triggerPosition={elem.elemTriggerPosition}
+        arrIndex={botArr.length}
+        bottom={elem.elemBottom}
+        key={index}
+      />
+    );
+  });
   return (
     <>
-      <div className="alertContainer">{topArr}</div>
-      <div className="alertContainer--bottom">{botArr}</div>
+      <div className="alertContainer">{topArrComponents}</div>
+      <div className="alertContainer--bottom">{botArrComponents}</div>
     </>
   );
 };
