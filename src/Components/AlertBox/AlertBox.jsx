@@ -7,42 +7,35 @@ import "../../Utils/FontsBackgrounds.scss";
 const AlertBox = ({ alertBoxArray, pushElem }) => {
   const topArr = [];
   const botArr = [];
-  let topDown = false;
 
   const triggerPosition = (ind, bot) => {
     if (bot) {
       const cutedElem = botArr.splice(ind, 1);
-      topArr.push(cutedElem);
-      pushElem();
+      pushElem(cutedElem[0]);
     } else {
       const cutedElem = topArr.splice(ind, 1);
-      botArr.push(cutedElem);
-      pushElem();
+      pushElem(cutedElem[0]);
     }
   };
 
   if (alertBoxArray) {
     alertBoxArray.forEach((elem, index) => {
-      if (topDown) {
+      if (elem.bottom) {
         botArr.push({
           elemAlertText: elem.alertText,
           elemAlertKey: elem.alertKey,
           elemTriggerPosition: triggerPosition,
-          elemArrIndex: botArr.length,
           elemBottom: elem.bottom,
           key: index,
         });
-        topDown = !topDown;
       } else {
         topArr.push({
           elemAlertText: elem.alertText,
           elemAlertKey: elem.alertKey,
           elemTriggerPosition: triggerPosition,
-          elemArrIndex: botArr.length,
           elemBottom: elem.bottom,
           key: index,
         });
-        topDown = !topDown;
       }
     });
   }
@@ -52,7 +45,7 @@ const AlertBox = ({ alertBoxArray, pushElem }) => {
         barText={elem.elemAlertText}
         barKey={elem.elemAlertKey}
         triggerPosition={elem.elemTriggerPosition}
-        arrIndex={topArr.length}
+        arrIndex={index}
         bottom={elem.elemBottom}
         key={index}
       />
@@ -64,7 +57,7 @@ const AlertBox = ({ alertBoxArray, pushElem }) => {
         barText={elem.elemAlertText}
         barKey={elem.elemAlertKey}
         triggerPosition={elem.elemTriggerPosition}
-        arrIndex={botArr.length}
+        arrIndex={index}
         bottom={elem.elemBottom}
         key={index}
       />

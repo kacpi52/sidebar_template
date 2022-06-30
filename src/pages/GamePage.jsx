@@ -106,8 +106,16 @@ const GamePage = () => {
     };
   });
 
-  const pushElem = () => {
-    setIsTriggerAlert(!isTriggerAlert); // POBUDZENIE HOOKA :)))
+  const pushElem = (cutedElem) => {
+    setIsTriggerAlert(!isTriggerAlert);
+    console.log(cutedElem);
+    setAlertContent((arr) => [
+      ...arr,
+      {
+        text: cutedElem.elemAlertText,
+        location: !cutedElem.elemBottom,
+      },
+    ]);
   };
 
   useEffect(() => {
