@@ -1,23 +1,26 @@
 import React, { useState } from "react";
 import "./AlertBar.scss";
 
-const AlertBar = ({ barText, barKey, triggerPosition, bottom, arrIndex }) => {
+const AlertBar = ({ alertText, mainArrayKey, triggerPosition }) => {
   const [alertVisibility, setAlertVisibility] = useState(true);
 
   return (
     <div
       className={alertVisibility ? "AlertItem" : "AlertItem--hidden"}
-      key={barKey}
+      key={mainArrayKey}
     >
-      <span key={barKey} className="AlertItem__text globalAlertBackground">
-        Alert nr {barKey}. {barText}
+      <span
+        key={mainArrayKey}
+        className="AlertItem__text globalAlertBackground"
+      >
+        Alert nr {mainArrayKey}. {alertText}
       </span>
       <span className="AlertItem__space">
         <button
-          key={barKey}
+          key={mainArrayKey}
           className="globalDarkButton"
           onClick={() => {
-            triggerPosition(arrIndex, bottom);
+            triggerPosition(mainArrayKey);
           }}
         >
           MOVE
@@ -25,7 +28,7 @@ const AlertBar = ({ barText, barKey, triggerPosition, bottom, arrIndex }) => {
       </span>
       <span className="AlertItem__space">
         <button
-          key={barKey}
+          key={mainArrayKey}
           className="globalDarkButton"
           onClick={() => {
             setAlertVisibility(false);
