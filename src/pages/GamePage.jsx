@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Menu from "../Components/SidebarMenu/Menu";
 import { Container, Row, Col } from "react-bootstrap";
+import AlertBox from "../Components/AlertBox/AlertBox";
+import "../Utils/Buttons.scss";
 
 const numbersQuantity = 20;
 const numbersRange = 20;
@@ -8,78 +10,124 @@ const ranArr = Array.from({ length: numbersQuantity }, () =>
   Math.floor(Math.random() * numbersRange)
 );
 const triesLimit = 5;
-const selectedArray = [];
-let filteredArray = [];
 
 const GamePage = () => {
   const [userNumber, setUserNumber] = useState(false),
     [errorHandler, setErrorHandler] = useState(false),
     [resultHandler, setResultHandler] = useState(false),
     [repeatError, setRepeatError] = useState(false),
-    [triesCounter, setTriesCounter] = useState(0);
+    [triesCounter, setTriesCounter] = useState(0),
+    [alertContent, setAlertContent] = useState([]);
 
   const inputHandler = (text) => {
     setUserNumber(parseInt(text.target.value));
   };
   const saveUserNumber = (event) => {
-    let checkVal = false;
+    let resVal = false;
+    var checkVal = false;
+    let evenCheck = false;
+
+    if (ranArr[0] % 2 === 0) evenCheck = true;
     setTriesCounter(triesCounter + 1);
+    setAlertContent((arr) => [
+      ...arr,
+      {
+        text: `Alert - Zostaly ci jeszcze ${triesLimit - triesCounter} próby`,
+        location: false,
+      },
+    ]);
     if (isNaN(userNumber)) {
       setErrorHandler("Podaj cyfre");
+      setAlertContent((arr) => [
+        ...arr,
+        {
+          text: `Alert - nie podales cyfry `,
+          location: false,
+        },
+      ]);
     } else {
       event.preventDefault();
       setErrorHandler(false);
-      filteredArray = evenFilter(ranArr);
-      selectedArray.forEach((elem) => {
-        if (elem === userNumber) {
-          checkVal = true;
-        } else {
-          checkVal = false;
-        }
-      });
+      ranArr.forEach((elem, index) =>
+        checkArray(elem, index, userNumber, resVal, checkVal, evenCheck)
+      );
       setRepeatError(checkVal);
-      if (
-        triesCounter < triesLimit &&
-        resultHandler !== true &&
-        checkVal !== true
-      ) {
-        setResultHandler(iterArray(filteredArray, userNumber));
-        filteredArray.push(userNumber);
-        selectedArray.push(userNumber);
-        console.log(selectedArray);
+      if (triesCounter < triesLimit && !resultHandler && !checkVal) {
+        setResultHandler(resVal);
+        ranArr.push(userNumber);
       }
     }
   };
-  const evenFilter = (array) => {
-    if (array[0] % 2 === 0) {
-      return array.filter((value) => {
-        return value % 2 === 0;
-      });
+  const checkArray = (elem, index, number, resVal, checkVal, evenCheck) => {
+    if (elem === number) {
+      if (evenCheck) {
+        if (elem % 2 === 0) resVal = true;
+      } else {
+        if (elem % 2 !== 0) resVal = true;
+      }
+      if (index >= numbersQuantity) {
+        checkVal = true;
+        setAlertContent((arr) => [
+          ...arr,
+          {
+            text: `powinno dac powtorke i wynik ${checkVal} `,
+            location: false,
+          },
+        ]);
+      }
     } else {
-      return array.filter((value) => {
-        return value % 2 !== 0;
-      });
+      if (index >= numbersQuantity) {
+        checkVal = false;
+      }
     }
   };
-  const iterArray = (array, selectedNumber) => {
-    let i = 0;
-    while (array[i - 1] !== selectedNumber && i < array.length) {
-      i += 1;
-      console.log(i);
-    }
-    if (array[i - 1] === selectedNumber) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
   const resetAll = () => {
     setResultHandler(false);
     setTriesCounter(0);
+    setAlertContent((arr) => [
+      ...arr,
+      {
+        text: `Alert od zresetowania danych `,
+        location: true,
+      },
+    ]);
   };
+
+  const alertBoxArray = alertContent.map((elem, index) => {
+    return {
+      alertText: elem.text,
+      mainArrayKey: index,
+      isBottom: elem.location,
+    };
+  });
+
+  const switchAlertPosition = (mainIndex) => {
+    const cutedElem = alertContent.splice(mainIndex, 1);
+    setAlertContent((arr) => [
+      ...arr,
+      {
+        text: cutedElem[0].text,
+        location: !cutedElem[0].location,
+      },
+    ]);
+  };
+
+  useEffect(() => {
+    setAlertContent((arr) => [
+      ...arr,
+      {
+        text: "Bazowy komunikat od otwarcia strony ",
+        location: true,
+      },
+    ]);
+  }, []);
+
   return (
     <>
+      <AlertBox
+        alertBoxArray={alertBoxArray}
+        switchAlertPosition={switchAlertPosition}
+      />
       <Menu />
       <Container>
         <Row>
@@ -114,8 +162,6 @@ const GamePage = () => {
             </button>
             <p>Dlugosc tablicy to {ranArr.length}</p>
             <p>{ranArr.join(" , ")}</p>
-            <p>Przesortowana tablica to </p>
-            <p>{filteredArray.join(" , ")}</p>
           </Col>
         </Row>
       </Container>

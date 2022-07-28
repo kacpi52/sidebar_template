@@ -1,0 +1,20 @@
+.AlertItem {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+  top: 0;
+  position: sticky;
+  &--hidden {
+    display: none;
+  }
+  &__text {
+    width: 95%;
+    text-align: center;
+  }
+  &__space {
+    width: 5%;
+    text-align: right;
+    margin-right: 10px;
+  }
+}
