@@ -1,40 +1,37 @@
 import React, { useState } from "react";
 import "./AlertBox.scss";
+import AlertBar from "./AlertBar";
 import "../../Utils/Buttons.scss";
 import "../../Utils/FontsBackgrounds.scss";
 
-const AlertBox = ({ alertText, bottom, alertKey }) => {
-  const [alertVisibility, setAlertVisibility] = useState(true);
+const AlertBox = ({ alertBoxArray, switchAlertPosition }) => {
+  const topAlerts = [];
+  const bottomAlerts = [];
 
-  return (
-    <div
-      className={
-        bottom
-          ? alertVisibility
-            ? "BottomAlertItem"
-            : "BottomAlertItem--hidden"
-          : alertVisibility
-          ? "AlertItem"
-          : "AlertItem--hidden"
+  const triggerPosition = (mainIndex) => {
+    switchAlertPosition(mainIndex);
+  };
+
+  if (alertBoxArray) {
+    alertBoxArray.forEach((elem) => {
+      if (elem.isBottom) {
+        bottomAlerts.push(elem);
+      } else {
+        topAlerts.push(elem);
       }
-      key={alertKey}
-    >
-      <span key={alertKey} className="AlertItem__text globalAlertBackground">
-        Alert nr {alertKey}. {alertText}
-      </span>
-      <span className="AlertItem__space">
-        <button
-          key={alertKey}
-          className="globalDarkButton"
-          onClick={() => {
-            setAlertVisibility(false);
-          }}
-        >
-          Close
-        </button>
-      </span>
-    </div>
+    });
+  }
+  const topAlertsHolder = topAlerts.map((elem, index) => {
+    return <AlertBar {...elem} triggerPosition={triggerPosition} key={index} />;
+  });
+  const bottomAlertsHolder = bottomAlerts.map((elem, index) => {
+    return <AlertBar {...elem} triggerPosition={triggerPosition} key={index} />;
+  });
+  return (
+    <>
+      <div className="alertContainer">{topAlertsHolder}</div>
+      <div className="alertContainer--bottom">{bottomAlertsHolder}</div>
+    </>
   );
 };
-
 export default AlertBox;

@@ -1,40 +1,13 @@
-.AlertItem {
+.alertContainer {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  width: 100%;
+  flex-direction: column;
   top: 0;
   position: sticky;
-  &--hidden {
-    display: none;
-  }
-  &__text {
-    width: 95%;
-    text-align: center;
-  }
-  &__space {
-    width: 5%;
-    text-align: right;
-    margin-right: 10px;
-  }
-}
-
-.BottomAlertItem {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  position: absolute;
-  bottom: 5px;
-  &--hidden {
-    display: none;
-  }
-  &__text {
-    width: 95%;
-    text-align: center;
-  }
-  &__space {
-    width: 5%;
-    text-align: right;
-    margin-right: 10px;
+  &--bottom {
+    width: 100%;
+    position: absolute;
+    top: auto;
+    bottom: 2px;
   }
 }
