@@ -17,15 +17,8 @@ const GamePage = () => {
     [resultHandler, setResultHandler] = useState(false),
     [repeatError, setRepeatError] = useState(false),
     [triesCounter, setTriesCounter] = useState(0),
-    [alertArray, setAlertArray] = useState([]),
     [alertContent, setAlertContent] = useState([]);
 
-  class alertClass {
-    constructor(text, location) {
-      this.text = text;
-      this.location = location;
-    }
-  }
   const inputHandler = (text) => {
     setUserNumber(parseInt(text.target.value));
   };
@@ -38,16 +31,19 @@ const GamePage = () => {
     setTriesCounter(triesCounter + 1);
     setAlertContent((arr) => [
       ...arr,
-      new alertClass(
-        `Alert - Zostaly ci jeszcze ${triesLimit - triesCounter} próby`,
-        false
-      ),
+      {
+        text: `Alert - Zostaly ci jeszcze ${triesLimit - triesCounter} próby`,
+        location: false,
+      },
     ]);
     if (isNaN(userNumber)) {
       setErrorHandler("Podaj cyfre");
       setAlertContent((arr) => [
         ...arr,
-        new alertClass(`Alert - nie podales cyfry `, false),
+        {
+          text: `Alert - nie podales cyfry `,
+          location: false,
+        },
       ]);
     } else {
       event.preventDefault();
@@ -55,7 +51,6 @@ const GamePage = () => {
       ranArr.forEach((elem, index) =>
         checkArray(elem, index, userNumber, resVal, checkVal, evenCheck)
       );
-      console.log(`po funkcji wynik powtorki to ${checkVal}`);
       setRepeatError(checkVal);
       if (triesCounter < triesLimit && !resultHandler && !checkVal) {
         setResultHandler(resVal);
@@ -72,10 +67,12 @@ const GamePage = () => {
       }
       if (index >= numbersQuantity) {
         checkVal = true;
-        console.log(` powinno dac powtorke i wynik ${checkVal}`);
         setAlertContent((arr) => [
           ...arr,
-          new alertClass(`powinno dac powtorke i wynik ${checkVal} `, false),
+          {
+            text: `powinno dac powtorke i wynik ${checkVal} `,
+            location: false,
+          },
         ]);
       }
     } else {
@@ -89,36 +86,48 @@ const GamePage = () => {
     setTriesCounter(0);
     setAlertContent((arr) => [
       ...arr,
-      new alertClass(`Alert od zresetowania danych `, true),
+      {
+        text: `Alert od zresetowania danych `,
+        location: true,
+      },
     ]);
-    console.log(alertContent);
   };
 
-  useEffect(() => {
-    if (alertContent) {
-      setAlertArray(alertContent);
-    }
-  }, [alertContent]);
-
-  const alertBoxArray = alertArray.map((elem, index) => {
+  const alertBoxArray = alertContent.map((elem, index) => {
     return {
       alertText: elem.text,
-      alertKey: index,
-      bottom: elem.location,
+      mainArrayKey: index,
+      isBottom: elem.location,
     };
   });
-  console.log(alertBoxArray);
+
+  const switchAlertPosition = (mainIndex) => {
+    const cutedElem = alertContent.splice(mainIndex, 1);
+    setAlertContent((arr) => [
+      ...arr,
+      {
+        text: cutedElem[0].text,
+        location: !cutedElem[0].location,
+      },
+    ]);
+  };
 
   useEffect(() => {
     setAlertContent((arr) => [
       ...arr,
-      new alertClass(`Bazowy alert od otwarcia strony `, true),
+      {
+        text: "Bazowy komunikat od otwarcia strony ",
+        location: true,
+      },
     ]);
   }, []);
 
   return (
     <>
-      <AlertBox alertBoxArray={alertBoxArray} />
+      <AlertBox
+        alertBoxArray={alertBoxArray}
+        switchAlertPosition={switchAlertPosition}
+      />
       <Menu />
       <Container>
         <Row>
