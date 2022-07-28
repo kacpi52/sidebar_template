@@ -1,3 +1,4 @@
 import AlertBox from "./AlertBox";
+import AlertBar from "./AlertBar";
 
-export default AlertBox;
+export { AlertBox, AlertBar };

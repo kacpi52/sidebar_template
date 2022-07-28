@@ -1,42 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./AlertBox.scss";
+import AlertBar from "./AlertBar";
 import "../../Utils/Buttons.scss";
 import "../../Utils/FontsBackgrounds.scss";
 
-const AlertBox = ({ alertContent }) => {
-  const [hideAlert, setHideAlert] = useState(),
-    [textAlert, setTextAlert] = useState([]);
-  useEffect(() => {
-    if (!alertContent) {
-      setHideAlert(false);
-    } else {
-      setHideAlert(true);
-      setTextAlert((arr) => [...arr, alertContent]);
-    }
-  }, [alertContent]);
+const AlertBox = ({ alertBoxArray, switchAlertPosition }) => {
+  const topAlerts = [];
+  const bottomAlerts = [];
 
+  const triggerPosition = (mainIndex) => {
+    switchAlertPosition(mainIndex);
+  };
+
+  if (alertBoxArray) {
+    alertBoxArray.forEach((elem) => {
+      if (elem.isBottom) {
+        bottomAlerts.push(elem);
+      } else {
+        topAlerts.push(elem);
+      }
+    });
+  }
+  const topAlertsHolder = topAlerts.map((elem, index) => {
+    return <AlertBar {...elem} triggerPosition={triggerPosition} key={index} />;
+  });
+  const bottomAlertsHolder = bottomAlerts.map((elem, index) => {
+    return <AlertBar {...elem} triggerPosition={triggerPosition} key={index} />;
+  });
   return (
-    <div className={hideAlert ? "AlertItem" : "AlertItem--hidden"}>
-      <span className="AlertItem__text globalAlertBackground">
-        {textAlert.map((elem, index) => (
-          <div key={index}>
-            Alert nr {index}. {elem}
-          </div>
-        ))}
-      </span>
-      <span className="AlertItem__space">
-        <button
-          className="globalDarkButton"
-          onClick={() => {
-            setHideAlert(false);
-            setTextAlert([]);
-          }}
-        >
-          Close
-        </button>
-      </span>
-    </div>
+    <>
+      <div className="alertContainer">{topAlertsHolder}</div>
+      <div className="alertContainer--bottom">{bottomAlertsHolder}</div>
+    </>
   );
 };
-
 export default AlertBox;
