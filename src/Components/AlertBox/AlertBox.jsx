@@ -1,54 +1,37 @@
 import React, { useState } from "react";
 import "./AlertBox.scss";
+import AlertBar from "./AlertBar";
 import "../../Utils/Buttons.scss";
 import "../../Utils/FontsBackgrounds.scss";
 
-const AlertBox = ({ alertText, bottom, alertKey }) => {
-  const [alertVisibility, setAlertVisibility] = useState(true),
-    [alertLocation, setAlertLocation] = useState(bottom);
+const AlertBox = ({ alertBoxArray, switchAlertPosition }) => {
+  const topAlerts = [];
+  const bottomAlerts = [];
 
-  if (bottom) {
-    return (
-      // tu jest poki co na sztywno
-      <div className="bottomContainer">
-        <AlertBar barText={alertText} barKey={alertKey} />
-        <AlertBar barText={alertText} barKey={alertKey} />
-      </div>
-    );
-  } else {
-    return <AlertBar barText={alertText} barKey={alertKey} />;
+  const triggerPosition = (mainIndex) => {
+    switchAlertPosition(mainIndex);
+  };
+
+  if (alertBoxArray) {
+    alertBoxArray.forEach((elem) => {
+      if (elem.isBottom) {
+        bottomAlerts.push(elem);
+      } else {
+        topAlerts.push(elem);
+      }
+    });
   }
-};
-
-export default AlertBox;
-
-const AlertBar = ({ barText, barKey }) => {
-  const [alertVisibility, setAlertVisibility] = useState(true);
-
+  const topAlertsHolder = topAlerts.map((elem, index) => {
+    return <AlertBar {...elem} triggerPosition={triggerPosition} key={index} />;
+  });
+  const bottomAlertsHolder = bottomAlerts.map((elem, index) => {
+    return <AlertBar {...elem} triggerPosition={triggerPosition} key={index} />;
+  });
   return (
-    <div
-      className={alertVisibility ? "AlertItem" : "AlertItem--hidden"}
-      key={barKey}
-    >
-      <span key={barKey} className="AlertItem__text globalAlertBackground">
-        Alert nr {barKey}. {barText}
-      </span>
-      <span className="AlertItem__space">
-        <button key={barKey} className="globalDarkButton" onClick={() => {}}>
-          MOVE
-        </button>
-      </span>
-      <span className="AlertItem__space">
-        <button
-          key={barKey}
-          className="globalDarkButton"
-          onClick={() => {
-            setAlertVisibility(false);
-          }}
-        >
-          Close
-        </button>
-      </span>
-    </div>
+    <>
+      <div className="alertContainer">{topAlertsHolder}</div>
+      <div className="alertContainer--bottom">{bottomAlertsHolder}</div>
+    </>
   );
 };
+export default AlertBox;
