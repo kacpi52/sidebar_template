@@ -4,54 +4,33 @@ import AlertBar from "./AlertBar";
 import "../../Utils/Buttons.scss";
 import "../../Utils/FontsBackgrounds.scss";
 
-const AlertBox = ({ alertBoxArray, pushElem }) => {
-  const topArr = [];
-  const botArr = [];
+const AlertBox = ({ alertBoxArray, switchAlertPosition }) => {
+  const topAlerts = [];
+  const bottomAlerts = [];
 
-  const triggerPosition = (ind, bot) => {
-    if (bot) {
-      const cutedElem = botArr.splice(ind, 1);
-      topArr.push(cutedElem);
-      pushElem();
-    } else {
-      const cutedElem = topArr.splice(ind, 1);
-      botArr.push(cutedElem);
-      pushElem();
-    }
+  const triggerPosition = (mainIndex) => {
+    switchAlertPosition(mainIndex);
   };
 
   if (alertBoxArray) {
-    alertBoxArray.forEach((elem, index) => {
-      if (elem.bottom) {
-        botArr.push(
-          <AlertBar
-            barText={elem.alertText}
-            barKey={elem.alertKey}
-            triggerPosition={triggerPosition}
-            arrIndex={botArr.length}
-            bottom={elem.bottom}
-            key={index}
-          />
-        );
+    alertBoxArray.forEach((elem) => {
+      if (elem.isBottom) {
+        bottomAlerts.push(elem);
       } else {
-        topArr.push(
-          <AlertBar
-            barText={elem.alertText}
-            barKey={elem.alertKey}
-            triggerPosition={triggerPosition}
-            arrIndex={topArr.length}
-            bottom={elem.bottom}
-            key={index}
-          />
-        );
+        topAlerts.push(elem);
       }
     });
   }
-
+  const topAlertsHolder = topAlerts.map((elem, index) => {
+    return <AlertBar {...elem} triggerPosition={triggerPosition} key={index} />;
+  });
+  const bottomAlertsHolder = bottomAlerts.map((elem, index) => {
+    return <AlertBar {...elem} triggerPosition={triggerPosition} key={index} />;
+  });
   return (
     <>
-      <div className="alertContainer">{topArr}</div>
-      <div className="alertContainer--bottom">{botArr}</div>
+      <div className="alertContainer">{topAlertsHolder}</div>
+      <div className="alertContainer--bottom">{bottomAlertsHolder}</div>
     </>
   );
 };
