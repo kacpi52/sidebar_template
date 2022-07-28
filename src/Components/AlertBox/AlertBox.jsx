@@ -4,69 +4,33 @@ import AlertBar from "./AlertBar";
 import "../../Utils/Buttons.scss";
 import "../../Utils/FontsBackgrounds.scss";
 
-const AlertBox = ({ alertBoxArray, pushElem }) => {
-  const topArr = [];
-  const botArr = [];
+const AlertBox = ({ alertBoxArray, switchAlertPosition }) => {
+  const topAlerts = [];
+  const bottomAlerts = [];
 
-  const triggerPosition = (ind, bot) => {
-    if (bot) {
-      const cutedElem = botArr.splice(ind, 1);
-      pushElem(cutedElem[0]);
-    } else {
-      const cutedElem = topArr.splice(ind, 1);
-      pushElem(cutedElem[0]);
-    }
+  const triggerPosition = (mainIndex) => {
+    switchAlertPosition(mainIndex);
   };
 
   if (alertBoxArray) {
-    alertBoxArray.forEach((elem, index) => {
-      if (elem.bottom) {
-        botArr.push({
-          elemAlertText: elem.alertText,
-          elemAlertKey: elem.alertKey,
-          elemTriggerPosition: triggerPosition,
-          elemBottom: elem.bottom,
-          key: index,
-        });
+    alertBoxArray.forEach((elem) => {
+      if (elem.isBottom) {
+        bottomAlerts.push(elem);
       } else {
-        topArr.push({
-          elemAlertText: elem.alertText,
-          elemAlertKey: elem.alertKey,
-          elemTriggerPosition: triggerPosition,
-          elemBottom: elem.bottom,
-          key: index,
-        });
+        topAlerts.push(elem);
       }
     });
   }
-  const topArrComponents = topArr.map((elem, index) => {
-    return (
-      <AlertBar
-        barText={elem.elemAlertText}
-        barKey={elem.elemAlertKey}
-        triggerPosition={elem.elemTriggerPosition}
-        arrIndex={index}
-        bottom={elem.elemBottom}
-        key={index}
-      />
-    );
+  const topAlertsHolder = topAlerts.map((elem, index) => {
+    return <AlertBar {...elem} triggerPosition={triggerPosition} key={index} />;
   });
-  const botArrComponents = botArr.map((elem, index) => {
-    return (
-      <AlertBar
-        barText={elem.elemAlertText}
-        barKey={elem.elemAlertKey}
-        triggerPosition={elem.elemTriggerPosition}
-        arrIndex={index}
-        bottom={elem.elemBottom}
-        key={index}
-      />
-    );
+  const bottomAlertsHolder = bottomAlerts.map((elem, index) => {
+    return <AlertBar {...elem} triggerPosition={triggerPosition} key={index} />;
   });
   return (
     <>
-      <div className="alertContainer">{topArrComponents}</div>
-      <div className="alertContainer--bottom">{botArrComponents}</div>
+      <div className="alertContainer">{topAlertsHolder}</div>
+      <div className="alertContainer--bottom">{bottomAlertsHolder}</div>
     </>
   );
 };
