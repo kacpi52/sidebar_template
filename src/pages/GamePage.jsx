@@ -103,13 +103,16 @@ const GamePage = () => {
 
   const switchAlertPosition = (mainIndex) => {
     const cutedElem = alertContent.splice(mainIndex, 1);
-    setAlertContent((arr) => [
-      ...arr,
-      {
-        text: cutedElem[0].text,
-        location: !cutedElem[0].location,
-      },
-    ]);
+    const switchedElem = {
+      text: cutedElem[0].text,
+      location: !cutedElem[0].location,
+    };
+    //setAlertContent(alertContent.splice(mainIndex, 0, switchedElem));
+    setAlertContent((arr) => {
+      arr.splice(mainIndex, 0, switchedElem);
+      console.log(arr);
+      return arr;
+    });
   };
 
   useEffect(() => {

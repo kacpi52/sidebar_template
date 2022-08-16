@@ -22,10 +22,22 @@ const AlertBox = ({ alertBoxArray, switchAlertPosition }) => {
     });
   }
   const topAlertsHolder = topAlerts.map((elem, index) => {
-    return <AlertBar {...elem} triggerPosition={triggerPosition} key={index} />;
+    return (
+      <AlertBar
+        {...elem}
+        triggerPosition={triggerPosition}
+        key={elem.mainArrayKey}
+      />
+    );
   });
   const bottomAlertsHolder = bottomAlerts.map((elem, index) => {
-    return <AlertBar {...elem} triggerPosition={triggerPosition} key={index} />;
+    return (
+      <AlertBar
+        {...elem}
+        triggerPosition={triggerPosition}
+        key={elem.mainArrayKey}
+      />
+    );
   });
   return (
     <>
