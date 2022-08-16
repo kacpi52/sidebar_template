@@ -102,6 +102,18 @@ const GamePage = () => {
   });
 
   const switchAlertPosition = (mainIndex) => {
+    const switchedAlerts = [];
+    allAlertContent.forEach((elem, index) => {
+      if (index === mainIndex) {
+        switchedAlerts.push({ ...elem, location: !elem.location });
+      } else {
+        switchedAlerts.push(elem);
+      }
+    });
+    setAllAlertContent(switchedAlerts);
+  };
+
+  const switchAlertPositionMap = (mainIndex) => {
     setAllAlertContent(
       allAlertContent.map((elem, index) => {
         if (index === mainIndex) {
