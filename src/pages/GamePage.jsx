@@ -17,7 +17,7 @@ const GamePage = () => {
     [resultHandler, setResultHandler] = useState(false),
     [repeatError, setRepeatError] = useState(false),
     [triesCounter, setTriesCounter] = useState(0),
-    [alertContent, setAlertContent] = useState([]);
+    [allAlertContent, setAllAlertContent] = useState([]);
 
   const inputHandler = (text) => {
     setUserNumber(parseInt(text.target.value));
@@ -29,7 +29,7 @@ const GamePage = () => {
 
     if (ranArr[0] % 2 === 0) evenCheck = true;
     setTriesCounter(triesCounter + 1);
-    setAlertContent((arr) => [
+    setAllAlertContent((arr) => [
       ...arr,
       {
         text: `Alert - Zostaly ci jeszcze ${triesLimit - triesCounter} próby`,
@@ -38,7 +38,7 @@ const GamePage = () => {
     ]);
     if (isNaN(userNumber)) {
       setErrorHandler("Podaj cyfre");
-      setAlertContent((arr) => [
+      setAllAlertContent((arr) => [
         ...arr,
         {
           text: `Alert - nie podales cyfry `,
@@ -67,7 +67,7 @@ const GamePage = () => {
       }
       if (index >= numbersQuantity) {
         checkVal = true;
-        setAlertContent((arr) => [
+        setAllAlertContent((arr) => [
           ...arr,
           {
             text: `powinno dac powtorke i wynik ${checkVal} `,
@@ -84,7 +84,7 @@ const GamePage = () => {
   const resetAll = () => {
     setResultHandler(false);
     setTriesCounter(0);
-    setAlertContent((arr) => [
+    setAllAlertContent((arr) => [
       ...arr,
       {
         text: `Alert od zresetowania danych `,
@@ -93,7 +93,7 @@ const GamePage = () => {
     ]);
   };
 
-  const alertBoxArray = alertContent.map((elem, index) => {
+  const alertBoxArray = allAlertContent.map((elem, index) => {
     return {
       alertText: elem.text,
       mainArrayKey: index,
@@ -102,21 +102,19 @@ const GamePage = () => {
   });
 
   const switchAlertPosition = (mainIndex) => {
-    const cutedElem = alertContent.splice(mainIndex, 1);
-    const switchedElem = {
-      text: cutedElem[0].text,
-      location: !cutedElem[0].location,
-    };
-    //setAlertContent(alertContent.splice(mainIndex, 0, switchedElem));
-    setAlertContent((arr) => {
-      arr.splice(mainIndex, 0, switchedElem);
-      console.log(arr);
-      return arr;
-    });
+    setAllAlertContent(
+      allAlertContent.map((elem, index) => {
+        if (index === mainIndex) {
+          return { ...elem, location: !elem.location };
+        } else {
+          return elem;
+        }
+      })
+    );
   };
 
   useEffect(() => {
-    setAlertContent((arr) => [
+    setAllAlertContent((arr) => [
       ...arr,
       {
         text: "Bazowy komunikat od otwarcia strony ",
