@@ -14,23 +14,29 @@ const AlertBox = ({ alertBoxArray, switchAlertPosition }) => {
 
   if (alertBoxArray) {
     alertBoxArray.forEach((elem) => {
-      if (elem.isBottom) {
+      if (elem.isLocationBottom) {
         bottomAlerts.push(elem);
       } else {
         topAlerts.push(elem);
       }
     });
   }
-  const topAlertsHolder = topAlerts.map((elem, index) => {
-    return <AlertBar {...elem} triggerPosition={triggerPosition} key={index} />;
-  });
-  const bottomAlertsHolder = bottomAlerts.map((elem, index) => {
-    return <AlertBar {...elem} triggerPosition={triggerPosition} key={index} />;
-  });
+  const alertsHolder = (array) => {
+    return array.map((elem) => {
+      return (
+        <AlertBar
+          {...elem}
+          triggerPosition={triggerPosition}
+          key={elem.mainArrayKey}
+        />
+      );
+    });
+  };
+
   return (
     <>
-      <div className="alertContainer">{topAlertsHolder}</div>
-      <div className="alertContainer--bottom">{bottomAlertsHolder}</div>
+      <div className="alertContainer">{alertsHolder(topAlerts)}</div>
+      <div className="alertContainer--bottom">{alertsHolder(bottomAlerts)}</div>
     </>
   );
 };
