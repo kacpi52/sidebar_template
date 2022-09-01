@@ -1,38 +1,42 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Container } from "react-bootstrap";
-import { AlertBox, Menu, ShopItem } from "../Components/index";
+import { AlertBox, Menu, ShopLayout } from "../Components/index";
 
-const pathXml = "/Data/Opony.xml";
-const mainTagSelector = "o";
-const priceTagSelector = "price";
-const descTagSelector = "desc";
-const imgTagSelector = "imgs main";
-const imgAttSelector = "url";
-const prodTagSelector = "attrs a[name='Producent']";
+const SELECTORS = {
+  filePath: "/Data/Opony.xml",
+  tagSelectorByO: "o",
+  tagSelectorByPrice: "price",
+  tagSelectorByDesc: "desc",
+  tagSelectorByImg: "imgs main",
+  tagSelectorByImgUrl: "url",
+  tagSelectorByProducent: "attrs a[name='Producent']",
+};
 
 const Shop = () => {
-  const [xmlElems, setXmlElems] = useState([]);
+  const [mainItemsArray, setMainItemsArray] = useState([]);
 
   useEffect(() => {
-    fetch(pathXml)
+    fetch(SELECTORS.filePath)
       .then((res) => res.text())
       .then((xmlString) => {
         const xmlDomObj = new window.DOMParser().parseFromString(
           xmlString,
           "text/xml"
         );
-        const xmlOElems = xmlDomObj.getElementsByTagName(mainTagSelector);
+        const xmlOElems = xmlDomObj.getElementsByTagName(
+          SELECTORS.tagSelectorByO
+        );
         const xmlElemsArr = Array.from(xmlOElems).map((elem, i) => {
           return {
-            price: elem.getAttribute(priceTagSelector),
-            desc: elem.querySelector(descTagSelector).textContent,
+            price: elem.getAttribute(SELECTORS.tagSelectorByPrice),
+            title: elem.querySelector(SELECTORS.tagSelectorByDesc).textContent,
             imgurl: elem
-              .querySelector(imgTagSelector)
-              .getAttribute(imgAttSelector),
-            producent: elem.querySelector(prodTagSelector).textContent,
+              .querySelector(SELECTORS.tagSelectorByImg)
+              .getAttribute(SELECTORS.tagSelectorByImgUrl),
+            producent: elem.querySelector(SELECTORS.tagSelectorByProducent)
+              .textContent,
           };
         });
-        setXmlElems(xmlElemsArr);
+        setMainItemsArray(xmlElemsArr);
       })
       .catch((err) => {
         console.log(err);
@@ -43,21 +47,7 @@ const Shop = () => {
     <>
       <AlertBox />
       <Menu />
-      <Container>
-        <Row>
-          <Col xs={12}>ALL SEASONS TIRES </Col>
-        </Row>
-        <Row>
-          {xmlElems.map((elem, index) => (
-            <ShopItem
-              title={xmlElems.length > 0 && elem.desc}
-              prod={xmlElems.length > 0 && elem.producent}
-              imgurl={xmlElems.length > 0 && elem.imgurl}
-              price={xmlElems.length > 0 && elem.price}
-            />
-          ))}
-        </Row>
-      </Container>
+      <ShopLayout mainItemsArray={mainItemsArray} />
     </>
   );
 };

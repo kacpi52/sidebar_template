@@ -17,8 +17,16 @@ const GamePage = () => {
     [resultHandler, setResultHandler] = useState(false),
     [repeatError, setRepeatError] = useState(false),
     [triesCounter, setTriesCounter] = useState(0),
-    [alertContent, setAlertContent] = useState([]);
-
+    [allAlertContent, setAllAlertContent] = useState([]);
+  const addAlert = (arr, textContent, isBottom) => {
+    return [
+      ...arr,
+      {
+        text: textContent,
+        isLocationBottom: isBottom,
+      },
+    ];
+  };
   const inputHandler = (text) => {
     setUserNumber(parseInt(text.target.value));
   };
@@ -29,22 +37,16 @@ const GamePage = () => {
 
     if (ranArr[0] % 2 === 0) evenCheck = true;
     setTriesCounter(triesCounter + 1);
-    setAlertContent((arr) => [
-      ...arr,
-      {
-        text: `Alert - Zostaly ci jeszcze ${triesLimit - triesCounter} próby`,
-        location: false,
-      },
-    ]);
+    setAllAlertContent(
+      addAlert(
+        allAlertContent,
+        `Zostaly ci jeszcze ${triesLimit - triesCounter} próby`,
+        false
+      )
+    );
     if (isNaN(userNumber)) {
       setErrorHandler("Podaj cyfre");
-      setAlertContent((arr) => [
-        ...arr,
-        {
-          text: `Alert - nie podales cyfry `,
-          location: false,
-        },
-      ]);
+      setAllAlertContent(addAlert(allAlertContent, "Nie podales cyfry", true));
     } else {
       event.preventDefault();
       setErrorHandler(false);
@@ -67,13 +69,13 @@ const GamePage = () => {
       }
       if (index >= numbersQuantity) {
         checkVal = true;
-        setAlertContent((arr) => [
-          ...arr,
-          {
-            text: `powinno dac powtorke i wynik ${checkVal} `,
-            location: false,
-          },
-        ]);
+        setAllAlertContent(
+          addAlert(
+            allAlertContent,
+            `powinno dac powtorke i wynik ${checkVal} `,
+            false
+          )
+        );
       }
     } else {
       if (index >= numbersQuantity) {
@@ -84,42 +86,57 @@ const GamePage = () => {
   const resetAll = () => {
     setResultHandler(false);
     setTriesCounter(0);
-    setAlertContent((arr) => [
-      ...arr,
-      {
-        text: `Alert od zresetowania danych `,
-        location: true,
-      },
-    ]);
+    setAllAlertContent(addAlert(allAlertContent, "Zresetowano dane", true));
   };
 
-  const alertBoxArray = alertContent.map((elem, index) => {
+  const alertBoxArray = allAlertContent.map((elem, index) => {
     return {
       alertText: elem.text,
       mainArrayKey: index,
-      isBottom: elem.location,
+      isLocationBottom: elem.isLocationBottom,
     };
   });
 
+  const switchAlertPositionSpl = (mainIndex) => {
+    const switchSelectedItem = (arr) => {
+      return {
+        ...arr[mainIndex],
+        isLocationBottom: !arr[mainIndex].isLocationBottom,
+      };
+    };
+    allAlertContent.splice(mainIndex, 1, switchSelectedItem(allAlertContent));
+    setAllAlertContent(allAlertContent); // tu mam problem co przypisac do seta skoro splice modyfikuje tab
+  };
+  const switchAlertPositionForEach = (mainIndex) => {
+    const switchedAlerts = [];
+    allAlertContent.forEach((elem, index) => {
+      if (index === mainIndex) {
+        switchedAlerts.push({
+          ...elem,
+          isLocationBottom: !elem.isLocationBottom,
+        });
+      } else {
+        switchedAlerts.push(elem);
+      }
+    });
+    setAllAlertContent(switchedAlerts);
+  };
   const switchAlertPosition = (mainIndex) => {
-    const cutedElem = alertContent.splice(mainIndex, 1);
-    setAlertContent((arr) => [
-      ...arr,
-      {
-        text: cutedElem[0].text,
-        location: !cutedElem[0].location,
-      },
-    ]);
+    setAllAlertContent(
+      allAlertContent.map((elem, index) => {
+        if (index === mainIndex) {
+          return { ...elem, isLocationBottom: !elem.isLocationBottom };
+        } else {
+          return elem;
+        }
+      })
+    );
   };
 
   useEffect(() => {
-    setAlertContent((arr) => [
-      ...arr,
-      {
-        text: "Bazowy komunikat od otwarcia strony ",
-        location: true,
-      },
-    ]);
+    setAllAlertContent(
+      addAlert(allAlertContent, `Bazowy komunikat od wyswietlenia strony`, true)
+    );
   }, []);
 
   return (

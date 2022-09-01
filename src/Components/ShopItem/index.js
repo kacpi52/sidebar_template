@@ -1,3 +1,4 @@
 import ShopItem from "./ShopItem";
+import ShopLayout from "./ShopLayout";
 
-export default ShopItem;
+export { ShopItem, ShopLayout };
